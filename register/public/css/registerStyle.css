@@ -1,0 +1,143 @@
+@charset "ISO-8859-1";
+*{
+   margin:0;
+   padding:0;
+   box-sizing:border-box;
+   font-family: 'poppins',sans-serif;
+ }
+ 
+ body
+ {
+   display: flex;
+   height: 100vh;
+   justify-content: center;
+   align-items: center;	
+   padding:10px;
+   background:linear-gradient(135deg, black, #7B3F00); 
+   
+ }
+ 
+ .container
+ {
+	 max-width: 700px;
+	 width:100%;
+	 background:white;
+	 padding:15px 15px;
+	 border-radius:10px;
+	 opacity:95%;
+	 /*background-image:url("Rbg.png");*/
+	 background-repeat:no-repeat;
+	 background-size:cover;
+	 background-position:center;
+	
+ }
+ 
+ .container .title
+ {
+	 font-size: 20px;
+	 font-weight:700;
+	 font-style:italic;
+	 position: relative;
+	 
+	 
+ }
+ 
+ .container .title::before
+ {
+	 content: '';
+	 position:absolute;
+	 left:0;
+	 bottom:0;
+	 height:2px;
+	 width:670px;	
+	 background:linear-gradient(135deg, brown, #9932CC);
+ }
+ 
+ .container form .user-details{
+	 display:flex;
+	 flex-wrap:wrap;
+	 justify-content:space-between;
+	 
+ }
+ 
+ form .user-details .input-box
+ {
+   margin:20px 0px 12px 0px;
+   width: calc(100%/2 -20px);
+   padding:10px;
+   margin-bottom:15px;
+   font-style:verdana;	
+   font-weight:600; 
+   font-family:'Monteserrat', sans-serif;    
+ } 
+ 
+  form .user-details .input-box input
+ {
+   height:35px;
+   width:100%;
+   margin: 6px;
+   border-radius:7px;
+   outline:none;
+   border:1px solid #ccc;
+   padding-left: 15px;
+   font-size:15px;
+   border-bottom-width:2px;
+    
+ }
+ 
+ .user-details .input-box .details
+ {
+   display:block;
+   font-size:17px;
+   font-style:verdana;
+   margin-bottom:5px;
+	
+ }
+ 
+ .user-details .input-box input:focus,
+ .user-details .input-box input:valid
+ {
+	 border-color:red;
+ }
+ 
+ form .button
+ {
+	 height:45px;
+	 margin:56px 0;
+ }
+ 
+ form .button input
+ {
+	 height:100%;	
+	 width :100%;
+	 outline:none;
+	 color:#fff;
+	 border:none;
+	 font-size:20px;
+	 background:linear-gradient(135deg, #9932CC, brown);
+	 border-radius:5px;
+	 font-weight:500;
+	 letter-spacing:5px;
+	 padding-left:3px
+	 
+ }
+ 
+ form .button input:hover
+ {
+	 background:linear-gradient(-135deg, #9932CC,brown);
+ }
+ 
+ @media (max-width:584px)
+ {
+	 .container
+	 {
+		 max-width:100%;
+	 }
+ 
+ 
+  form .user-details .input-box
+  {
+	 margin-bottom:15px;
+	 width:100%;
+  }
+ }
