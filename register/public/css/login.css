@@ -1,0 +1,162 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'poppins',sans-serif;
+  }
+  
+  body
+  {
+    display:flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;	
+    padding:10px;
+    background-image:url("Bg1.jpg");
+     background-repeat:no-repeat;
+      background-size:cover;
+      background-position:center;
+    /*background:linear-gradient(-135deg, black, #7B3F00);*/
+    
+  }
+  
+  .container
+  {
+      max-width: 800px;
+      max-height:400px;
+      height:100%;
+      width:100%;
+      background:white;
+      padding:15px 15px;
+      border-radius:10px;
+      opacity:95%;
+      /*background-image:url("Bg1.jpg");*/
+      background-repeat:no-repeat;
+      background-size:cover;
+      background-position:center;
+      
+     
+  }
+  
+  .container .title
+  {
+      font-size:35px;
+      font-weight:700;
+      font-style:italic;
+      position: relative;
+      
+      
+  }
+  
+   .container .title::before
+  {
+      content: '';
+      position:absolute;
+      left:0;
+      bottom:0;
+      height:2px;
+      width:670px;	
+      background:linear-gradient(135deg, brown, purple);
+  }
+  
+  .container .heading
+  {
+      font-size:25px;
+      font-weight:700;
+      font-style:italic;
+      position: relative;
+      align-items:center;
+  }
+  
+  .container .heading::before
+  {
+      content: '';
+      position:absolute;
+      left:0;
+      bottom:0;
+      height:2px;
+      width:318px;	
+      background:linear-gradient(135deg, brown,purple);
+  }
+  
+  .container .input-box
+  {
+      display:block;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+  }
+  
+ .input-box
+  {
+    margin:6px 0px 12px 0px;
+    width: calc(100%/2 -20px);
+    padding:20px;
+    margin-bottom:10px;
+    font-style:italic;																																																												
+  }
+  
+  .container .input-box .details 
+  {
+    height:36px;
+    width:100%;
+    margin: 6px;
+    border-radius:8px;
+    outline:none;
+    border:1px solid #ccc;
+    padding-left: 15px;
+    font-size:20px;
+    border-bottom-width:3px;   
+    margin-bottom:5px; 
+    color:white;   
+    background:linear-gradient(135deg, #9932CC,brown);
+  } 
+   
+  
+   form .user-details .input-box input
+  {
+    height:35px;
+    width:50%;
+    margin: 6px;
+    border-radius:7px;
+    outline:none;
+    border:1px solid #ccc;
+    padding-left: 15px;
+    font-size:16px;
+    border-bottom-width:3px;
+     
+  }
+  
+  .container .input-box input:focus,
+  .container .input-box input:valid
+  {
+      border-color:brown;
+  }
+  
+   form .button
+  {
+      height:45px;
+      margin:56px 0;
+  }
+  
+  form .button input
+  {
+      height:100%;	
+      width :100%;
+      outline:none;
+      color:#fff;
+      border:none;
+      font-size:25px;
+      background:linear-gradient(135deg, purple, brown);
+      border-radius:100px;
+      font-weight:500;
+      letter-spacing:5px;
+      
+  }
+  
+  form .button input:hover
+  {
+      background:linear-gradient(-135deg, purple,brown);
+  }
+  
+  
