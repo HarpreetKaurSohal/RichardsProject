@@ -30,6 +30,6 @@ const userSchema = new mongoose.Schema({
 
 //creating a collection
 
-const Register = new mongoose.model("Register", userSchema);
+const Register = new mongoose.model("User", userSchema);
 
 module.exports= Register;

@@ -1,8 +1,13 @@
 const express = require("express");
+const { findSourceMap } = require("module");
 const path = require("path");
+const { URLSearchParams } = require("url");
 const app = express();
 
-require("./db/conn");
+
+
+//const mongoose = require("mongoose");
+const mongoose = require("./db/conn");
 const Register = require("./models/userRegister");
 
 const port = process.env.PORT || 3000;
@@ -18,18 +23,25 @@ app.set("view engine", "hbs");
 app.set("views", template_path);
 
 app.get("/", (req,res) => {
-    res.render("index")
+    res.render("home")
 });
 
-app.get("/registration",(req,res) =>{
-    res.render("registration")
+app.get("/registration",(req, res) =>{
+    res.render("registration.hbs")
 });
+
+//app.get("/registration", registrationRequestArrived);
+//
+//function registrationRequestArrived(req, res)
+//{ 
+//    res.render("registration");
+//}
 
 app.post("/userRegister", async (req,res) =>{
     try {
         const password = req.body.password;
         const conPass = req.body.confirmPass;
-        if(password=== conPass){
+        if(password === conPass){
             const registerUser = new Register({
                 fullname: req.body.fullname,
                 mobileNum: req.body.mobileNum,
@@ -52,9 +64,35 @@ app.post("/userRegister", async (req,res) =>{
     }
 });
 
-/*app.get("/login",(req,res) =>{
+app.get("/login",(req,res) =>{
     res.render("login")
-});*/
+});
+
+app.post("/userLogin",(req,res)=>{
+    const tempEmail = req.body.email
+    console.log('email from req',tempEmail)
+
+    //check tempEmail from MongoDB
+    /*const fname= Register.find(Register.paths.email)
+      console.log('this is fname',fname)
+    const dbemail = Register.find({'email': req.body.email},(err,user)=>{
+        if(err)
+        {
+            console.log(err)
+        }
+        else{
+            return user
+        }
+      
+    })*/
+       
+      
+    
+})
+
+app.get("/aboutUs",(req,res)=>{
+    res.render("aboutUs")
+})
 
 app.listen(port, () => {
     console.log(`server is running at port no ${port}`);

@@ -1,0 +1,162 @@
+*{
+    margin: 0px;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    background-color:#fff3f3
+ 
+}
+.header{
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(IMG.jpg) ;
+}
+
+.header h3{
+  
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(pic2.jpg) ;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    width: 1510px;
+    height: 100px;
+    font-size: 300%;
+    margin-left: 19%;
+    font-style: italic;
+    color: white;
+    font-weight: 1000;
+}
+.section{
+    width: 100%;
+    min-height: 100vh;
+}
+.content{
+    max-width: max-content;
+    max-height: max-content;
+}
+
+.container{
+    width: 80%;
+    display: block;
+    margin: auto;
+    padding-top: 1px;
+}
+.content-section{
+    float: left;
+    width: 55%;
+    
+}
+.image-section{
+    float: left;
+    width: 30%;
+}
+
+.content-section .title{
+    text-transform: uppercase;
+    font-size: 28px;
+    color: #a52a2a;
+    opacity: 87%;
+}
+.content-section .content h3{
+    margin-top: 20px;
+    color: #a52a2a;
+    
+
+}
+
+.content-section .content p{
+    margin-top: 10px;
+    font-family:'Times New Roman', Times, serif ;
+    font-size: 18px;
+    line-height: 1.5;
+    color : #1f1818;
+    width: 100%;
+
+}
+
+.content-section .content .button{
+    margin-top: 30px;
+} 
+.content-section .content .button a{
+    background-color: #3d3d3d;
+    padding: 12px 40px;
+    margin-bottom: 0%;
+    text-decoration: none;
+    color: #fff;
+    font-size: 25px;
+    letter-spacing: 1.5px;
+}
+
+.content-section .content .button a:hover{
+    background-color: #a52a2a ;
+    color: #fff;
+
+}
+
+.content-section .content .social{
+    margin-top: 15px;
+}
+
+.content-section .content .social i{
+    color: #a52a2a;
+    font-size: 30px;
+    padding: 0px 10px;
+}
+.content-section .content .social i:hover{
+    color: blue;
+    font-size: 30px;
+    padding: 0px 10px;
+}
+
+.content-section .content .social s{
+    color: #a52a2a;
+    font-size: 30px;
+    padding: 0px 10px;
+}
+.content-section .content .social s:hover{
+    color: purple;
+    font-size: 30px;
+    padding: 0px 10px;
+}
+
+.content-section .content .social d{
+    color: #a52a2a;
+    font-size: 30px;
+    padding: 0px 10px;
+}
+.content-section .content .social d:hover{
+    color: green;
+    font-size: 30px;
+    padding: 0px 10px;
+}
+
+@media screen and (max-width:768px){
+    .container{
+        width: 80%;
+        display: block;
+        margin: auto;
+        padding-top: 1px;
+    }
+
+    .content-section{
+        float: none;
+        width: 100%;
+        display: block;
+        margin: auto;
+        
+    }
+    .image-section{
+        float: left;
+        width: 30%;
+    }
+
+.content-section .title{
+    text-align: center;
+    font-size: 19px;
+}
+
+.content-section .content .button{
+    text-align: center;
+
+}
+
+
+}

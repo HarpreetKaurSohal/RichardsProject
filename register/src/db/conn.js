@@ -8,3 +8,5 @@ mongoose.connect('mongodb://localhost:27017/registration', {
 }).catch((e) => {
     console.log(`no connection ${e}`);
 })
+
+module.exports= mongoose
