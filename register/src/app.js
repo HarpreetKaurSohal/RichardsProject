@@ -1,5 +1,6 @@
 const express = require("express");
 const { findSourceMap } = require("module");
+const router = express.Router();
 const path = require("path");
 const { URLSearchParams } = require("url");
 const app = express();
@@ -8,6 +9,9 @@ const app = express();
 
 //const mongoose = require("mongoose");
 const mongoose = require("./db/conn");
+//database connection
+require("./db/conn");
+const mongoose = require("mongoose");
 const Register = require("./models/userRegister");
 
 const port = process.env.PORT || 3000;
@@ -93,6 +97,24 @@ app.post("/userLogin",(req,res)=>{
 app.get("/aboutUs",(req,res)=>{
     res.render("aboutUs")
 })
+/*app.get("/booking",(req,res,next) =>{
+    Register.find((err,docs) => {
+        if(!err) {
+            res.render("booking");
+        }
+        else{
+            res.render("registration");
+        }
+    });
+});*/
+
+app.get("/home",(req,res) =>{
+    res.render("home")
+});
+
+app.get("/about",(req,res) =>{
+    res.render("aboutUs")
+});
 
 app.listen(port, () => {
     console.log(`server is running at port no ${port}`);

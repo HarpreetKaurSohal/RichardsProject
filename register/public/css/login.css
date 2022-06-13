@@ -22,7 +22,9 @@
      background-repeat:no-repeat;
       background-size:cover;
       background-position:center;
-    /*background:linear-gradient(-135deg, black, #7B3F00);*/
+      /*filter:blur(8px);
+      -webkit-filter: blur(8px);
+       background:linear-gradient(-135deg, black, #7B3F00);*/
     
   }
   
