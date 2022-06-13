@@ -11,7 +11,7 @@ const app = express();
 const mongoose = require("./db/conn");
 //database connection
 require("./db/conn");
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 const Register = require("./models/userRegister");
 
 const port = process.env.PORT || 3000;
