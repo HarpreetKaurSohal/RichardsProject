@@ -3,7 +3,7 @@
    margin:0;
    padding:0;
    box-sizing:border-box;
-   font-family: 'poppins',sans-serif;
+   font-family: 'Poppins',sans-serif;
  }
  
  body
@@ -13,7 +13,9 @@
    justify-content: center;
    align-items: center;	
    padding:10px;
-   background:linear-gradient(135deg, black, #7B3F00); 
+   background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(Bg1.jpg) ;
+   background-position: center;
+   background-size: cover;
    
  }
  
@@ -25,10 +27,6 @@
 	 padding:15px 15px;
 	 border-radius:10px;
 	 opacity:95%;
-	 /*background-image:url("Rbg.png");*/
-	 background-repeat:no-repeat;
-	 background-size:cover;
-	 background-position:center;
 	
  }
  
@@ -70,6 +68,9 @@
    font-weight:600; 
    font-family:'Monteserrat', sans-serif;    
  } 
+ .input:hover{
+	box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
+ }
  
   form .user-details .input-box input
  {
@@ -104,22 +105,22 @@
  {
 	 height:45px;
 	 margin:56px 0;
+	 transition: 1s;  
  }
  
  form .button input
  {
-	 height:100%;	
-	 width :100%;
-	 outline:none;
-	 color:#fff;
-	 border:none;
-	 font-size:20px;
-	 background:linear-gradient(135deg, #9932CC, brown);
-	 border-radius:5px;
-	 font-weight:500;
-	 letter-spacing:5px;
-	 padding-left:3px
-	 
+	height:100%;	
+	width :100%;
+	outline:none;
+	color:#fff;
+	border:none;
+	font-size:20px;
+	background:linear-gradient(135deg, #9932CC, brown);
+	border-radius:5px;
+	font-weight:500;
+	letter-spacing:5px;
+	padding-left:3px
  }
  
  form .button input:hover
@@ -127,17 +128,25 @@
 	 background:linear-gradient(-135deg, #9932CC,brown);
  }
  
- @media (max-width:584px)
+ @media (max-width:700px)
  {
+	.container .title{
+		margin-top: 60%;
+		width: 200px;
+		font-size: 20px;
+		height: 300px;
+		margin-bottom: 0;
+	}
 	 .container
 	 {
-		 max-width:100%;
+		max-width:90%;
+		margin-top: 30px;
 	 }
  
  
   form .user-details .input-box
   {
-	 margin-bottom:15px;
+	 margin-bottom:10px;
 	 width:100%;
   }
  }

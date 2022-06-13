@@ -1,8 +1,11 @@
 const express = require("express");
+const router = express.Router();
 const path = require("path");
 const app = express();
 
+//database connection
 require("./db/conn");
+const mongoose = require("mongoose");
 const Register = require("./models/userRegister");
 
 const port = process.env.PORT || 3000;
@@ -52,9 +55,24 @@ app.post("/userRegister", async (req,res) =>{
     }
 });
 
-/*app.get("/login",(req,res) =>{
-    res.render("login")
+/*app.get("/booking",(req,res,next) =>{
+    Register.find((err,docs) => {
+        if(!err) {
+            res.render("booking");
+        }
+        else{
+            res.render("registration");
+        }
+    });
 });*/
+
+app.get("/home",(req,res) =>{
+    res.render("home")
+});
+
+app.get("/about",(req,res) =>{
+    res.render("aboutUs")
+});
 
 app.listen(port, () => {
     console.log(`server is running at port no ${port}`);
