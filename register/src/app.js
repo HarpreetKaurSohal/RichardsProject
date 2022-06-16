@@ -72,10 +72,32 @@ app.get("/login",(req,res) =>{
     res.render("login")
 });
 
-app.post("/userLogin",(req,res)=>{
-    const tempEmail = req.body.email
-    console.log('email from req',tempEmail)
+app.post("/userLogin",async(req,res)=>{
+    try{
+        const email = req.body.email
+        const password = req.body.password
 
+        const useremail = await Register.findOne({email:email});
+        
+        if(useremail.password === password)
+        {
+            res.status(201).render("home")
+        }
+        else{
+            res.send("Password is not matching")
+        }
+    }
+    catch(error)
+    {
+        res.status(400).send("Inavalid email")
+    }
+    /*const tempEmail = req.body.email
+    console.log('email from req',tempEmail)
+    const singleUser = Register.find((user) => user.email===tempEmail)
+    if(!singleUser){
+        return res.status(404).send("User does not exist")
+    }
+    res.status(200).send("Success.. User found")*/
     //check tempEmail from MongoDB
     /*const fname= Register.find(Register.paths.email)
       console.log('this is fname',fname)
