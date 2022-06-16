@@ -5,8 +5,6 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>About Us Section</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href="/css/aboutUs.css">
-    
     <link rel='stylesheet' type='text/css' media='screen' href='/css/aboutStyle.css'>
     <script src='main.js'></script>
 
@@ -24,7 +22,22 @@
 <body>
 
     <section class="header">
-       <h3>Richard's Wine And Rum Cakes </h3>        
+      <nav>
+            <a href="home.hbs"><img src="" alt="logo"></a>
+            <div class="nav-links" id="navLinks">
+                <!--to add cross closing icon-->
+                <i class="bi bi-x" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="/home">HOME</a></li>
+                    <li><a href="">MENU</a></li>
+                    <li><a href="">CONTACT</a></li>
+                </ul>
+            </div>
+            <i class="bi bi-list" onclick="showMenu()"></i>
+        </nav>
+        <div class="heading">
+          <h3>Richard's Wine And Rum Cakes </h3>  
+        </div>      
      </section>
 
     <div class="section">
@@ -53,9 +66,9 @@
                 </div>
 
                 <div class="social">
-                  <a href="#"><i class="bi bi-facebook" ></i></a>
-                  <a href="#"><s class="bi bi-instagram"></s></a>
-                  <a href="#"><d class="bi bi-whatsapp"></d></a>
+                  <a href="https://www.facebook.com/Richards-wine-cakes-rum-cakes-190578039140727/"><i class="bi bi-facebook"></i></a>
+                  <a href="https://www.instagram.com/richards-wine-and-rum-cakes/"><i class="bi bi-instagram"></i></a>
+                  <i class="bi bi-whatsapp"></i>
                 </div><!-- -->
                
           </div>

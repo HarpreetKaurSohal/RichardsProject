@@ -4,6 +4,16 @@ const router = express.Router();
 const path = require("path");
 const { URLSearchParams } = require("url");
 const app = express();
+let alert = require("alert")
+
+//session 
+var session = require("express-session");
+app.use(session({
+    secret: 'harpreetjoel',
+    resave: false,
+    saveUninitialized: false
+}))
+app.use(express.urlencoded({extended:false}))
 
 
 
@@ -34,13 +44,6 @@ app.get("/registration",(req, res) =>{
     res.render("registration.hbs")
 });
 
-//app.get("/registration", registrationRequestArrived);
-//
-//function registrationRequestArrived(req, res)
-//{ 
-//    res.render("registration");
-//}
-
 app.post("/userRegister", async (req,res) =>{
     try {
         const password = req.body.password;
@@ -58,8 +61,7 @@ app.post("/userRegister", async (req,res) =>{
             const registered = await registerUser.save();
             res.status(201).render("login");
         }else{
-            res.send("passwords do not match");
-            
+            alert("Passwords do not match");
         }
 
     } catch (error) {
@@ -81,7 +83,11 @@ app.post("/userLogin",async(req,res)=>{
         
         if(useremail.password === password)
         {
-            res.status(201).render("home")
+            sess = req.session
+            sess.name = useremail.fullname
+            sess.email = useremail.email
+            //console.log(sess)
+            res.status(201).render("newHome",{name:sess.name})
         }
         else{
             res.send("Password is not matching")
@@ -116,19 +122,23 @@ app.post("/userLogin",async(req,res)=>{
     
 })
 
+
+app.post("/newHome",(req,res)=>{
+    res.render("newHome")
+})
+
+app.get("/logout",(req,res)=>{
+    req.session.destroy((err)=>{
+        if(err){
+            console.log(err)
+        }
+        res.redirect("/home")
+    })
+})
+
 app.get("/aboutUs",(req,res)=>{
     res.render("aboutUs")
 })
-/*app.get("/booking",(req,res,next) =>{
-    Register.find((err,docs) => {
-        if(!err) {
-            res.render("booking");
-        }
-        else{
-            res.render("registration");
-        }
-    });
-});*/
 
 app.get("/home",(req,res) =>{
     res.render("home")
