@@ -151,5 +151,16 @@ router.get("/about",(req,res) =>{
     res.render("aboutUs")
 });
 
+router.get("/contact",(req,res)=>{
+    if(req.session.email)
+    {
+        res.render("contact")
+    }
+    else{
+        res.render("contact")
+    }
+    
+})
+
 
 module.exports = router

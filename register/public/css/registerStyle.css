@@ -23,10 +23,12 @@
  {
 	 max-width: 700px;
 	 width:100%;
-	 background:white;
+	 /*background:white;*/
 	 padding:15px 15px;
 	 border-radius:10px;
 	 opacity:95%;
+	 backdrop-filter: blur(5px);
+
 	
  }
  
@@ -36,6 +38,7 @@
 	 font-weight:700;
 	 font-style:italic;
 	 position: relative;
+	 color: aliceblue;
 	 
 	 
  }
@@ -92,6 +95,7 @@
    font-size:17px;
    font-style:verdana;
    margin-bottom:5px;
+   color: aliceblue;
 	
  }
  
@@ -136,11 +140,11 @@
  
  .login-link a{
 	font-size: 15px;
-	color:black
+	color:tomato
  }
 
  .login-link a:hover{
-	color:brown
+	color:red
  }
  
  @media (max-width:700px)
