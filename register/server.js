@@ -14,6 +14,7 @@ const mongoose = require("./src/db/conn");
 require("./src/db/conn");
 //const mongoose = require("mongoose");
 const Register = require("./src/models/userRegister");
+const Feedback = require("./src/models/userFeedback");
 
 app.use(session({
     secret: 'harpreetjoel',
@@ -160,6 +161,42 @@ router.get("/contact",(req,res)=>{
         res.render("contact")
     }
     
+})
+
+router.post("/processFeedback",async(req,res)=>{
+    try 
+    {
+        const fEmail= req.body.email
+        const fName = req.body.name
+       const subject = req.body.subject
+       const message = req.body.message
+       console.log(subject)
+       console.log(message)
+            const registerFeedback = new Feedback({
+            fName:req.body.name,
+            fEmail:req.body.email,
+            subject: req.body.subject,
+            message: req.body.message
+         })
+
+         const feedbackSaved = await registerFeedback.save();
+         if(req.session.email)
+         {
+            res.status(201).render(newHome)
+         }
+         else
+         {
+            res.status(201).redirect("/home")
+         }
+         
+         alert("thank your for your feedback")
+        
+    } 
+    catch (error) 
+    {
+        alert("your feedback not  sent");
+        console.log(error)
+    }
 })
 
 
