@@ -17,6 +17,7 @@
     "express-session": "^1.17.3",
     "hbs": "^4.2.0",
     "mongoose": "^6.3.4",
-    "redis": "^4.1.0"
+    "redis": "^4.1.0",
+    "sweetalert": "^2.1.2"
   }
 }

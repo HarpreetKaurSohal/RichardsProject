@@ -15,6 +15,7 @@ require("./src/db/conn");
 //const mongoose = require("mongoose");
 const Register = require("./src/models/userRegister");
 const Feedback = require("./src/models/userFeedback");
+const { default: swal } = require('sweetalert')
 
 app.use(session({
     secret: 'harpreetjoel',
@@ -155,7 +156,7 @@ router.get("/about",(req,res) =>{
 router.get("/contact",(req,res)=>{
     if(req.session.email)
     {
-        res.render("contact")
+        res.render("contact",{name:req.session.name})
     }
     else{
         res.render("contact")
@@ -182,11 +183,12 @@ router.post("/processFeedback",async(req,res)=>{
          const feedbackSaved = await registerFeedback.save();
          if(req.session.email)
          {
-            res.status(201).render(newHome)
+            res.status(201).render("newHome",{name:req.session.name})
          }
          else
          {
             res.status(201).redirect("/home")
+
          }
          
          alert("thank your for your feedback")
