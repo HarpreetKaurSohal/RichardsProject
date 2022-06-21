@@ -155,7 +155,7 @@ router.get("/about",(req,res) =>{
 router.get("/contact",(req,res)=>{
     if(req.session.email)
     {
-        res.render("contact")
+        res.render("contact",{name:req.session.name})
     }
     else{
         res.render("contact")
@@ -194,10 +194,49 @@ router.post("/processFeedback",async(req,res)=>{
     } 
     catch (error) 
     {
-        alert("your feedback not  sent");
+        alert("Your feedback not  sent");
         console.log(error)
     }
 })
+router.get("/menu",(req,res) =>{
+    if(req.session.email)
+    {
+        res.render("menu",{name:req.session.name})
+    }
+    else{
+        res.render("menu")
+    }
+    
+});
+router.get("/wineCake",(req,res) =>{
+    if(req.session.email)
+    {
+        res.render("wineCake",{name:req.session.name})
+    }
+    else{
+        res.render("wineCake")
+    }
+    
+});
+router.get("/rumCake",(req,res) =>{
+    if(req.session.email)
+    {
+        res.render("rumCake",{name:req.session.name})
+    }
+    else{
+        res.render("rumCake")
+    }
+    
+});
+router.get("/plainCake",(req,res) =>{
+    if(req.session.email)
+    {
+        res.render("plainCake",{name:req.session.name})
+    }
+    else{
+        res.render("plainCake")
+    }
+});
 
 
 module.exports = router
