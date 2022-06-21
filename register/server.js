@@ -166,12 +166,12 @@ router.get("/contact",(req,res)=>{
 router.post("/processFeedback",async(req,res)=>{
     try 
     {
-        const fEmail= req.body.email
-        const fName = req.body.name
-       const subject = req.body.subject
-       const message = req.body.message
-       console.log(subject)
-       console.log(message)
+    //     const fEmail= req.body.email
+    //     const fName = req.body.name
+    //    const subject = req.body.subject
+    //    const message = req.body.message
+    //    console.log(subject)
+    //    console.log(message)
             const registerFeedback = new Feedback({
             fName:req.body.name,
             fEmail:req.body.email,
@@ -182,7 +182,7 @@ router.post("/processFeedback",async(req,res)=>{
          const feedbackSaved = await registerFeedback.save();
          if(req.session.email)
          {
-            res.status(201).render(newHome)
+            res.status(201).render("newHome", {name:req.session.name})
          }
          else
          {
