@@ -7,6 +7,7 @@ const client = redis.createClient();
 const router = express.Router()
 const app = express()
 let alert = require("alert")
+const nodemailer = require('nodemailer');
 
 //const mongoose = require("mongoose");
 const mongoose = require("./src/db/conn");
@@ -15,6 +16,7 @@ require("./src/db/conn");
 //const mongoose = require("mongoose");
 const Register = require("./src/models/userRegister");
 const Feedback = require("./src/models/userFeedback");
+const UserOTPVerification = require("./src/models/UserOTPVerification");
 const { default: swal } = require('sweetalert')
 
 app.use(session({
@@ -38,31 +40,45 @@ router.get("/registration",(req, res) =>{
     res.render("registration.hbs")
 });
 
+
+
+//verify otp click should take the control to /userRegistration
 router.post("/userRegister", async (req,res) =>{
     try {
-        const password = req.body.password;
-        const conPass = req.body.confirmPass;
-        if(password === conPass){
-            const registerUser = new Register({
+
+        //db madhun UserOTPVerification collection madhun OTP retrive kar 
+        //ani check kar with req.otp if == then do the registration part
+        
+
+        
+           const password = req.body.password;
+           const conPass = req.body.confirmPass;
+            if(password === conPass)
+            {
+              const registerUser = new Register({
                 fullname: req.body.fullname,
                 mobileNum: req.body.mobileNum,
                 email: req.body.email,
                 address: req.body.address,
                 password: password,
                 confirmPass: conPass
-            })
-
-            const registered = await registerUser.save();
-            res.status(201).render("login");
-        }else{
-            alert("Passwords do not match");
-        }
-
-    } catch (error) {
-        alert("You are already registered.Please login.")
+              })
+              //if(opt == res.otp)
+              const registered = await registerUser.save();
+              res.status(201).render("login");
+              //else wrong otp
+             }
+             else
+             {
+               alert("Passwords do not match");
+            }
+     }//try ends 
+     catch (error) 
+    {
+    alert("You are already registered.Please login.")
         //res.status(400).send(error);
-        
     }
+     
 });
 
 router.get("/login",(req,res) =>{
@@ -93,29 +109,6 @@ router.post("/userLogin",async(req,res)=>{
     {
         alert("Inavalid email")
     }
-    /*const tempEmail = req.body.email
-    console.log('email from req',tempEmail)
-    const singleUser = Register.find((user) => user.email===tempEmail)
-    if(!singleUser){
-        return res.status(404).send("User does not exist")
-    }
-    res.status(200).send("Success.. User found")*/
-    //check tempEmail from MongoDB
-    /*const fname= Register.find(Register.paths.email)
-      console.log('this is fname',fname)
-    const dbemail = Register.find({'email': req.body.email},(err,user)=>{
-        if(err)
-        {
-            console.log(err)
-        }
-        else{
-            return user
-        }
-      
-    })*/
-       
-      
-    
 })
 
 router.post("/newHome",(req,res)=>{
