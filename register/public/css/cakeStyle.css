@@ -119,65 +119,103 @@ nav .bi{
     font-size: 1.5rem;
     color: #333;
 }
-
 .categories .box-container{
     padding-top: 1rem;
     display:flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     padding-left: 7rem;
-    padding-right: 2rem;
+    padding-right: 7rem;
     padding-bottom: 3rem;
 }
-.categories .box-container .button{
-    border: .1rem solid rgba(0,0,0,.3);
-    border-radius: .5rem;
-    
-}
 .categories .box-container .box{
-    flex: 1 ;
+    /* flex: 1 1 30rem; */
     /*padding: 1.5rem;*/
     overflow: hidden;
-    width: 300px;
-    height: 280px;
+    width: 450px;
+    height: 300px;
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
     border: .1rem solid rgba(0,0,0,.3);
     cursor: pointer;
     border-radius: .5rem;
-    /*background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(baker3.jpg) ;
+    text-align: center;
+    padding-top: 222px;
+    margin: 1rem;
+    /* background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(pic2.jpg) ;
     background-position: center;
-    background-size: cover;*/
+    background-size: cover; */
     position: relative;
     
 }
-.categories .box-container .box .image{
-    height: 100%;
-    width:100%;
-    object-fit: fill;
-    position: absolute;
-    top: -100%;
-    left: 0;
-    transition: 1s;
-}
-.categories .box-container .box .content{
-    text-align: center;
-    background: #fff;
-    padding: 3rem;
-}
-.categories .box-container .box .content h3{
-    font-size: 2rem;
-    color: #70002a;
-    font-family: 'Pacifico', cursive;
-}
-.categories .box-container .box .content p{
-    font-size: 1rem;
-    color: #666;
-    padding: 1rem 0;
-}
-.categories .box-container .box:hover .image{
-    top: 0;
+.categories .box-container .plum{
+    background-image: url(plum.jpeg) ;
+    background-position: center;
+    background-size: cover;
+    position: relative;
 
 }
-.categories .box-container .box:hover .content{
-    transform: translateY(100%);
+.categories .box-container .cran{
+    background-image: url(cranberry.jpeg) ;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+.categories .box-container .blue{
+    background-image: url(blueberry.jpg) ;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+.categories .box-container .cherry{
+    background-image:url(cherry.jpg) ;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+.categories .box-container .straw{
+    background-image: url(strawberry.jpeg) ;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+.categories.box-container.box.content{
+    height: 80%;
+    padding-top: 150px;
+}
+    
+.categories .box-container .box .content h3{
+    font-size: 2rem;
+    background-color: #333;
+    color: #fff;
+    text-align: center; 
+    font-family: 'Pacifico', cursive;
+    /* padding: 1rem; */
+}
+.categories .box-container .box .content h4{
+    font-size: 1.5rem;
+    color: #fff;
+    text-align: center; 
+    background-color: #333;
+    /* font-family: 'Pacifico', cursive;
+    padding: 3rem; */
+}
+
+
+/* .categories .box-container .box .opt{
+    text-align: center;
+    color:#fff
+} */
+.categories.box-container.big-box{
+    padding: 1rem;
+    text-align: center;
+}
+.categories .box-container .big-box button{
+    padding: .5rem;
+    margin-left: 40%;
+    border-radius: .5rem;
+}
+.categories .box-container .big-box button:hover{
+    background: #70002a;
+    color: #fff;
+    transition: 1s;
 }
