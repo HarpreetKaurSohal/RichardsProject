@@ -160,12 +160,12 @@ router.get("/contact",(req,res)=>{
 router.post("/processFeedback",async(req,res)=>{
     try 
     {
-        const fEmail= req.body.email
-        const fName = req.body.name
-       const subject = req.body.subject
-       const message = req.body.message
-       console.log(subject)
-       console.log(message)
+    //     const fEmail= req.body.email
+    //     const fName = req.body.name
+    //    const subject = req.body.subject
+    //    const message = req.body.message
+    //    console.log(subject)
+    //    console.log(message)
             const registerFeedback = new Feedback({
             fName:req.body.name,
             fEmail:req.body.email,
@@ -176,12 +176,11 @@ router.post("/processFeedback",async(req,res)=>{
          const feedbackSaved = await registerFeedback.save();
          if(req.session.email)
          {
-            res.status(201).render("newHome",{name:req.session.name})
+            res.status(201).render("newHome", {name:req.session.name})
          }
          else
          {
             res.status(201).redirect("/home")
-
          }
          
          alert("thank your for your feedback")
@@ -189,10 +188,49 @@ router.post("/processFeedback",async(req,res)=>{
     } 
     catch (error) 
     {
-        alert("your feedback not  sent");
+        alert("Your feedback not  sent");
         console.log(error)
     }
 })
+router.get("/menu",(req,res) =>{
+    if(req.session.email)
+    {
+        res.render("menu",{name:req.session.name})
+    }
+    else{
+        res.render("menu")
+    }
+    
+});
+router.get("/wineCake",(req,res) =>{
+    if(req.session.email)
+    {
+        res.render("wineCake",{name:req.session.name})
+    }
+    else{
+        res.render("wineCake")
+    }
+    
+});
+router.get("/rumCake",(req,res) =>{
+    if(req.session.email)
+    {
+        res.render("rumCake",{name:req.session.name})
+    }
+    else{
+        res.render("rumCake")
+    }
+    
+});
+router.get("/plainCake",(req,res) =>{
+    if(req.session.email)
+    {
+        res.render("plainCake",{name:req.session.name})
+    }
+    else{
+        res.render("plainCake")
+    }
+});
 
 
 module.exports = router
