@@ -17,7 +17,6 @@ require("./src/db/conn");
 const Register = require("./src/models/userRegister");
 const Feedback = require("./src/models/userFeedback");
 const UserOTPVerification = require("./src/models/UserOTPVerification");
-const { default: swal } = require('sweetalert')
 
 app.use(session({
     secret: 'harpreetjoel',
