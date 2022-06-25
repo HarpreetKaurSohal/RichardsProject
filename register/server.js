@@ -7,6 +7,8 @@ const client = redis.createClient();
 const router = express.Router()
 const app = express()
 let alert = require("alert")
+
+//email handler
 const nodemailer = require('nodemailer');
 
 //const mongoose = require("mongoose");
@@ -18,6 +20,14 @@ const Register = require("./src/models/userRegister");
 const Feedback = require("./src/models/userFeedback");
 const UserOTPVerification = require("./src/models/UserOTPVerification");
 
+
+//uqique string
+const{v4: uuidv4} = require("uuid");
+//const UserOTPVerification = require('./src/models/UserOTPVerification')
+
+//env var
+require("dotenv").config();
+
 app.use(session({
     secret: 'harpreetjoel',
     store: new redisStore({host:'localhost', port: 6379, client: client, ttl: 500}),
@@ -28,6 +38,28 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static(__dirname + '/views'))
 
+
+//nodemailer transpoter
+let transpoter = nodemailer.createTransport({
+    host:'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth:{
+        user:"joelpatole4@gmail.com",
+        pass:"sohpkcehmqvnoztg",
+    }
+})
+
+//testing suceess
+transpoter.verify((error,success)=>{
+    if(error){
+        console.log('error in mail connection')
+        console.log(error)
+    }else{
+        console.log("ready for message")
+        console.log(success)
+    }
+})
 // var sess;
 
 //routes
@@ -43,7 +75,9 @@ router.get("/registration",(req, res) =>{
 
 //verify otp click should take the control to /userRegistration
 router.post("/userRegister", async (req,res) =>{
-    try {
+    console.log("/userRegister reached.")
+    try 
+    {
 
         //db madhun UserOTPVerification collection madhun OTP retrive kar 
         //ani check kar with req.otp if == then do the registration part
@@ -60,18 +94,39 @@ router.post("/userRegister", async (req,res) =>{
                 email: req.body.email,
                 address: req.body.address,
                 password: password,
-                confirmPass: conPass
-              })
+                confirmPass: conPass,
+                verified:false})
               //if(opt == res.otp)
-              const registered = await registerUser.save();
-              res.status(201).render("login");
+              const registered = await registerUser.save()
+              .then((result)=>{
+                //handle account verification 
+                console.log("trying to save reg data.", result);
+                //(result,res);
+                sendVerificationEmail(req.body.email,res,registerUser._id);
+                //res.status(201).render("login");
+                
+              })
+              .catch((err)=>{
+                console.log(err)
+                res.json({
+                    err,
+                    status:"failed",
+                    message:"an error occured while saving"
+                })
+              })
+              //res.status(201).render("login");
               //else wrong otp
              }
-             else
+             else 
              {
                alert("Passwords do not match");
-            }
-     }//try ends 
+             }
+
+            //send otp to mail logic
+                        
+
+
+    }//try ends 
      catch (error) 
     {
     alert("You are already registered.Please login.")
@@ -80,10 +135,72 @@ router.post("/userRegister", async (req,res) =>{
      
 });
 
+
+
+const sendVerificationEmail = (email,res,_id)=>{
+    //url to be used in email
+    console.log("inside sendVerificationEmail()");
+   
+    const currentUrl = "http.//localhost:3000/";
+    const uniqueString = uuidv4() + _id;
+    
+     //otp creation
+     var num = Math.random()*9999
+     OTP=(Math.floor(num));
+     console.log(OTP)
+
+    const mailOptions = {
+        from:"joelpatole4@gmail.com",
+        to:email,
+        subject:"Verify your email",
+        html:`<p>Verify your Email address to compelete the signup process</p><p>This OTP <b>expires in 1 hour.</b></p>
+              <p> <b>OTP: ${OTP}</b></p>`,
+        //html:`<p>Verify your Email address to compelete the signup process</p><p>This link <b>expires in 1 hour.</b></p>
+        //      <p> <a href=${currentUrl+"user/verify/"+_id+"/"+uniqueString}>Press</a> to proceed.</p>`,
+    }
+
+    const UOV = new UserOTPVerification({
+        userID:_id,
+        //uniqueString:
+        email:email,
+        otp:OTP,
+        createdAt:Date.now(),
+        expiresAt:Date.now() + 3600000,
+
+    })
+    console.log("sendVerificationEmail Entered ", _id , " ",email);
+    UOV
+    .save()
+    .then(()=>{
+        transpoter.sendMail(mailOptions)
+        .then(()=>{
+            console.log("Email Sent.");
+            res.status(201).redirect("/otp");
+            /*res.json({
+                status:"Pending",
+                message:"otp sent"
+            })*/
+        })
+        .catch((error)=>{
+            console.log(error)
+            res.json({
+                status:"failed",
+                message:"error in sending otp"
+            })
+        })
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}
+
 router.get("/login",(req,res) =>{
     res.render("login")
 });
 
+router.get("/otp",(req,res) =>{
+    res.render("OTP")
+});
 
 router.post("/userLogin",async(req,res)=>{
     try{
