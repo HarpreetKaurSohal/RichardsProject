@@ -38,7 +38,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static(__dirname + '/views'))
 
-
+    
 //nodemailer transpoter
 let transpoter = nodemailer.createTransport({
     host:'smtp.gmail.com',
@@ -83,7 +83,7 @@ router.post("/userRegister", async (req,res) =>{
         //ani check kar with req.otp if == then do the registration part
         
 
-        
+           const email=req.body.email;
            const password = req.body.password;
            const conPass = req.body.confirmPass;
             if(password === conPass)
@@ -96,24 +96,37 @@ router.post("/userRegister", async (req,res) =>{
                 password: password,
                 confirmPass: conPass,
                 verified:false})
-              //if(opt == res.otp)
-              const registered = await registerUser.save()
-              .then((result)=>{
-                //handle account verification 
-                console.log("trying to save reg data.", result);
-                //(result,res);
-                sendVerificationEmail(req.body.email,res,registerUser._id);
-                //res.status(201).render("login");
                 
-              })
-              .catch((err)=>{
-                console.log(err)
-                res.json({
-                    err,
-                    status:"failed",
-                    message:"an error occured while saving"
-                })
-              })
+                const userDetails = await Register.findOne({email:email});
+                console.log('entered email is, ',email)
+               //console.log('user wala email is, ',userDetails.email)
+                if(userDetails)
+                {
+                   alert('Email alredy registered, please login')
+                   res.render("login.hbs")
+                }
+                else
+                {
+                          //if(opt == res.otp)
+                         const registered = await registerUser.save()
+                        .then((result)=>{
+                        //handle account verification 
+                        console.log("trying to save reg data.", result);
+                        //(result,res);
+                        sendVerificationEmail(req.body.email,res,registerUser._id);
+                        //res.status(201).render("login");
+                
+                         })
+                        .catch((err)=>{
+                        console.log(err)
+                        res.json({
+                            err,
+                            status:"failed",
+                            message:"an error occured while saving"
+                        })
+                        })
+                }
+            
               //res.status(201).render("login");
               //else wrong otp
              }
@@ -165,7 +178,7 @@ const sendVerificationEmail = (email,res,_id)=>{
         email:email,
         otp:OTP,
         createdAt:Date.now(),
-        expiresAt:Date.now() + 3600000,
+        expiresAt:Date.now() + 600000,
 
     })
     console.log("sendVerificationEmail Entered ", _id , " ",email);
@@ -347,6 +360,32 @@ router.get("/plainCake",(req,res) =>{
         res.render("plainCake")
     }
 });
+
+router.post("/verifyOtp" ,async(req,res)=>{
+    const otp = req.body.otp
+    console.log(otp)
+    const userOtpDetails = await UserOTPVerification.findOne({otp:otp});
+    if(userOtpDetails)
+    {
+        if(userOtpDetails.expiresAt-userOtpDetails.createdAt > 600000)
+        {
+           alert('timeOut')
+        }
+        else
+        {
+            console.log(userOtpDetails)
+            alert("OTP Verified.")
+            res.render("login.hbs")
+        }
+        
+    }
+    else{
+        alert('wrong otp')
+        console.log("wrong otp")
+        
+    }
+    
+})
 
 
 module.exports = router
