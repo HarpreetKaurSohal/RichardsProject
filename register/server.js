@@ -365,6 +365,7 @@ router.post("/verifyOtp" ,async(req,res)=>{
     const otp = req.body.otp
     console.log(otp)
     const userOtpDetails = await UserOTPVerification.findOne({otp:otp});
+    console.log(userOtpDetails)
     if(userOtpDetails)
     {
         if(userOtpDetails.expiresAt-userOtpDetails.createdAt > 600000)
