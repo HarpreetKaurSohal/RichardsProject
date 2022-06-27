@@ -188,7 +188,7 @@ const sendVerificationEmail = (email,res,_id)=>{
         transpoter.sendMail(mailOptions)
         .then(()=>{
             console.log("Email Sent.");
-            res.status(201).redirect("/otp");
+            res.status(201).render("OTP",{email:email});
             /*res.json({
                 status:"Pending",
                 message:"otp sent"
@@ -212,7 +212,7 @@ router.get("/login",(req,res) =>{
 });
 
 router.get("/otp",(req,res) =>{
-    res.render("OTP")
+    res.render("OTP",{email:req.body.email})
 });
 
 router.post("/userLogin",async(req,res)=>{
