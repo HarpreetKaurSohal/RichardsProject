@@ -20,9 +20,13 @@
 
         <div class="title title-otp">RICHARDS WINE AND RUM CAKE</div>
 	    <form action="/verifyOTP" method="post">
-        <div class="heading heading-otp">OTP sent on your registered email-id: {{email}}</div>
+        <div class="heading heading-otp">OTP sent on your registered email-id:</div>
 
         <div class="user-details">
+            <div class="input-box">
+                <span class="details">Your email-id</span>
+                <input type="text" class="input" value="{{email}}" name="email" readonly>
+            </div>
             <div class="input-box">
                 <span class="details">Enter OTP here</span>
                 <input type="text" class="input" placeholder="enter otp" name="otp" required>
@@ -35,5 +39,10 @@
         </form>
 
     </div>
+    <script>
+        var email="{{email}}";
+        console.log("email from html",email)
+    </script>
 </body>
+
 </html>

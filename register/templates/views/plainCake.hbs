@@ -43,59 +43,30 @@
      <section class="categories">
             <h2 class="head">PLAIN CAKES</h2>
             <p class="para">Rates are as per 1/2kg. These cakes have 0% alcohol.</p>
-        <div class="box-container">
-            <div class="big-box">
-                <div class="box plum">
-                    {{!-- <img class="image" src="/css/plum.jpeg" alt=""> --}}
-                    <div class="content">
-                        <h3>Plum Plain Cake</h3>
-                        <h4>Rs.250</h4>
-                    </div>
+            {{# each products}}
+                <div class="box-container">
+                    {{# each this}}
+                        <div class="big-box">
+                        <div class="box plum">
+                            <div class="content">
+                                <img class="image" src="{{this.imagePath}}" alt="">
+                                <h3>{{this.title}}</h3>
+                                <h4>Rs.{{this.price}}</h4>
+                            </div>
+                        </div>
+                        <button type="button">Add to cart</button>
+                        </div>
+                    {{/each}}
+                    
                 </div>
-            <button type="button">Add to cart</button>
-            </div>
-            <div class="big-box">
-                <div class="box cran">
-                    {{!-- <img class="image" src="/css/plum.jpeg" alt=""> --}}
-                    <div class="content">
-                        <h3>Cranberry Plain Cake</h3>
-                        <h4>Rs.280</h4>
-                    </div>
-                </div>
-            <button type="button">Add to cart</button>
-            </div>
-            <div class="big-box">
-                <div class="box cherry">
-                    {{!-- <img class="image" src="/css/plum.jpeg" alt=""> --}}
-                    <div class="content">
-                        <h3>Cherry Plain Cake</h3>
-                        <h4>Rs.290</h4>
-                    </div>
-                </div>
-            <button type="button">Add to cart</button>
-            </div>
-            <div class="big-box">
-                <div class="box blue">
-                    {{!-- <img class="image" src="/css/plum.jpeg" alt=""> --}}
-                    <div class="content">
-                        <h3>Blueberry Plain Cake</h3>
-                        <h4>Rs.350</h4>
-                    </div>
-                </div>
-            <button type="button">Add to cart</button>
-            </div>
-            <div class="big-box">
-                <div class="box straw">
-                    {{!-- <img class="image" src="/css/plum.jpeg" alt=""> --}}
-                    <div class="content">
-                        <h3>Strawberry Plain Cake</h3>
-                        <h4>Rs.280</h4>
-                    </div>
-                </div>
-            <button type="button">Add to cart</button>
-            </div>
-            
-        </div>
+            {{/each}}
+        
      </section>
+
+     {{!-- jquery link  --}}
+     <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
 </body>
 </html>

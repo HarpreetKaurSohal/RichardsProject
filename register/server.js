@@ -19,10 +19,15 @@ require("./src/db/conn");
 const Register = require("./src/models/userRegister");
 const Feedback = require("./src/models/userFeedback");
 const UserOTPVerification = require("./src/models/UserOTPVerification");
+const ProductWine = require("./src/models/productWine");
+const ProductRum = require("./src/models/productRum");
+const ProductPlain = require("./src/models/productPlain");
 
 
 //uqique string
 const{v4: uuidv4} = require("uuid");
+const { isBoolean, result } = require('lodash')
+const { callbackPromise } = require('nodemailer/lib/shared')
 //const UserOTPVerification = require('./src/models/UserOTPVerification')
 
 //env var
@@ -113,8 +118,8 @@ router.post("/userRegister", async (req,res) =>{
                         //handle account verification 
                         console.log("trying to save reg data.", result);
                         //(result,res);
-                        sendVerificationEmail(req.body.email,res,registerUser._id);
-                        //res.status(201).render("login");
+                        sendVerificationEmail(req.body.email,res,registerUser._id)
+                        //res.status(201).render("login")
                 
                          })
                         .catch((err)=>{
@@ -189,21 +194,38 @@ const sendVerificationEmail = (email,res,_id)=>{
         .then(()=>{
             console.log("Email Sent.");
             res.status(201).render("OTP",{email:email});
+            
+            console.log("sucess in data entry")
+                        
             /*res.json({
                 status:"Pending",
                 message:"otp sent"
             })*/
+            return OTP
         })
         .catch((error)=>{
             console.log(error)
+                var myquery={email:email}
+                Register.deleteOne(myquery,(err,obj)=>{
+                if(err) throw err
+                 console.log("user-Data deleted")
+                })
             res.json({
                 status:"failed",
                 message:"error in sending otp"
             })
+            //return false
         })
+        
     })
     .catch((error)=>{
+        var myquery={email:email}
+        Register.deleteOne(myquery,(err,obj)=>{
+        if(err) throw err
+            console.log("user-Data deleted")
+        })
         console.log(error)
+        //return false
     })
 }
 
@@ -332,37 +354,68 @@ router.get("/menu",(req,res) =>{
     
 });
 router.get("/wineCake",(req,res) =>{
-    if(req.session.email)
-    {
-        res.render("wineCake",{name:req.session.name})
-    }
-    else{
-        res.render("wineCake")
-    }
+    ProductWine.find(function(err,docs){
+        var productChunks = [];
+        var chunkSize = 2;
+        for(var i=0;i<docs.length;i+=chunkSize){
+            productChunks.push(docs.slice(i,i+chunkSize));
+        }
+        if(req.session.email)
+        {
+            res.render("wineCake",{name:req.session.name,products:productChunks})
+        }
+        else{
+            res.render("wineCake",{products:productChunks})
+        }
+    });
+    // if(req.session.email)
+    // {
+    //     res.render("wineCake",{name:req.session.name,products:products})
+    // }
+    // else{
+    //     res.render("wineCake",{products:products})
+    // }
     
 });
 router.get("/rumCake",(req,res) =>{
-    if(req.session.email)
-    {
-        res.render("rumCake",{name:req.session.name})
-    }
-    else{
-        res.render("rumCake")
-    }
+    ProductRum.find(function(err,docs){
+        var productChunks = [];
+        var chunkSize = 2;
+        for(var i=0;i<docs.length;i+=chunkSize){
+            productChunks.push(docs.slice(i,i+chunkSize));
+        }
+        if(req.session.email)
+        {
+            res.render("rumCake",{name:req.session.name,products:productChunks})
+        }
+        else{
+            res.render("rumCake",{products:productChunks})
+        }
+    });
     
 });
 router.get("/plainCake",(req,res) =>{
-    if(req.session.email)
-    {
-        res.render("plainCake",{name:req.session.name})
-    }
-    else{
-        res.render("plainCake")
-    }
+        ProductPlain.find(function(err,docs){
+        var productChunks = [];
+        var chunkSize = 2;
+        for(var i=0;i<docs.length;i+=chunkSize){
+            productChunks.push(docs.slice(i,i+chunkSize));
+        }
+        if(req.session.email)
+        {
+            res.render("plainCake",{name:req.session.name,products:productChunks})
+        }
+        else{
+            res.render("plainCake",{products:productChunks})
+        }
+    });
+
 });
 
 router.post("/verifyOtp" ,async(req,res)=>{
     const otp = req.body.otp
+    const email = req.body.email
+    console.log(email)
     console.log(otp)
     const userOtpDetails = await UserOTPVerification.findOne({otp:otp});
     console.log(userOtpDetails)
@@ -371,18 +424,47 @@ router.post("/verifyOtp" ,async(req,res)=>{
         if(userOtpDetails.expiresAt-userOtpDetails.createdAt > 600000)
         {
            alert('timeOut')
+           var myquery={otp:otp}
+            UserOTPVerification.deleteOne(myquery,(err,obj)=>{
+                 if(err) throw err
+                 console.log("otp-Data deleted")
+            })
+           var myquery={email:email}
+            Register.deleteOne(myquery,(err,obj)=>{
+                 if(err) throw err
+                 console.log("user-Data deleted")
+            })
         }
         else
         {
             console.log(userOtpDetails)
             alert("OTP Verified.")
             res.render("login.hbs")
+            var myquery={otp:otp}
+            UserOTPVerification.deleteOne(myquery,(err,obj)=>{
+                 if(err) throw err
+                 console.log("otp-Data deleted")
+            })
+
         }
         
     }
     else{
         alert('wrong otp')
         console.log("wrong otp")
+
+        var myqueryotp= {email:email}
+        console.log(myqueryotp)
+            UserOTPVerification.deleteOne(myqueryotp,(err,obj)=>{
+                 if(err) throw err
+                 console.log("otp-Data deleted")
+            })
+        var myqueryuser={email:email}
+            Register.deleteOne(myqueryuser,(err,obj)=>{
+                 if(err) throw err
+                 console.log("user-Data deleted")
+            })
+        res.render("registration")
         
     }
     
