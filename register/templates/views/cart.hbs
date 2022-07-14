@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plain Menu</title>
-    <link rel="stylesheet" href="/css/cakeStyle.css">
+    <title>Cart</title>
+    <link rel="stylesheet" href="/css/cartStyle.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -23,7 +23,10 @@
 <body>
     <section class="header">
       <nav>
+        <div class="logo">
             <a href="home.hbs"><img src="" alt="logo"></a>
+            <label class="user">Hello, {{name}}</label>
+        </div>
             <div class="nav-links" id="navLinks">
                 <!--to add cross closing icon-->
                 <i class="bi bi-x" onclick="hideMenu()"></i>
@@ -31,43 +34,36 @@
                     <li><a href="/home">HOME</a></li>
                     <li><a href="/aboutUs">ABOUT</a></li>
                     <li><a href="/contact">CONTACT</a></li>
-                    <li><a href="/cart">CART</a></li>
                     <li><a href="/menu">BACK</a></li>
                 </ul>
             </div>
-            <i class="bi bi-list" onclick="showMenu()"></i>
         </nav>
         <div class="heading">
           <h3>Richard's Wine And Rum Cakes </h3>  
         </div>      
      </section>
-     <section class="categories">
-            <h2 class="head">PLAIN CAKES</h2>
-            <p class="para">Rates are as per 1/2kg. These cakes have 0% alcohol.</p>
-            {{# each products}}
-                <div class="box-container">
-                    {{# each this}}
-                        <div class="big-box">
-                        <div class="box plum">
-                            <div class="content">
-                                <img class="image" src="{{this.imagePath}}" alt="">
-                                <h3>{{this.title}}</h3>
-                                <h4>Rs.{{this.price}}</h4>
-                            </div>
-                        </div>
-                        <button type="button"><a href="/add-cart-plain/{{this._id}}">Add to cart</a></button>
-                        </div>
-                    {{/each}}
-                    
-                </div>
-            {{/each}}
-        
+     <section class="items">
+            <h2 class="head">YOUR SELECTS</h2><br>
+            {{# if products }}
+            <div class="list">
+                {{# each products }}
+                <label>{{ this.qty }}</label>
+                <label>{{ this.item.title}}</label>
+                <label>Rs.{{ this.price }}</label><br>
+                {{/each}}
+            </div>
+            <div class="total">
+                <br><label>Total: {{ totalPrice}}</label><br><br>
+            </div>
+            <div class="checkout">
+                <button type="button">Checkout</button>
+            </div>
+            {{ else }}
+            <div class="no-item">
+                <h4>No Items in Cart</h4>
+            </div>
+            {{/if}}
+            
      </section>
-
-     {{!-- jquery link  --}}
-     <script
-  src="https://code.jquery.com/jquery-2.2.4.min.js"
-  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-  crossorigin="anonymous"></script>
 </body>
 </html>

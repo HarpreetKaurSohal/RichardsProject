@@ -28,9 +28,17 @@
                 <!--to add cross closing icon-->
                 <i class="bi bi-x" onclick="hideMenu()"></i>
                 <ul>
+                    {{# if name}}
                     <li><a href="/home">HOME</a></li>
-                    <li><a href="/about">ABOUT</a></li>
+                    <li><a href="/aboutUs">ABOUT</a></li>
                     <li><a href="/contact">CONTACT</a></li>
+                    {{ else }}
+                    <li><a href="/registration">NEW REGISTER</a></li>
+                    <li><a href="/login">LOGIN</a></li>
+                    <li><a href="/home">HOME</a></li>
+                    <li><a href="/aboutUs">ABOUT</a></li>
+                    <li><a href="/contact">CONTACT</a></li>
+                  {{/if}}
                 </ul>
             </div>
             <i class="bi bi-list" onclick="showMenu()"></i>

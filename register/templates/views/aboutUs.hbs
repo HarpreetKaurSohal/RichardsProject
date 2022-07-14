@@ -28,9 +28,18 @@
                 <!--to add cross closing icon-->
                 <i class="bi bi-x" onclick="hideMenu()"></i>
                 <ul>
+                  {{# if name}}
+                    <li><a href="/home">HOME</a></li>
+                    <li><a href="/menu">MENU</a></li>
+                    <li><a href="/cart">CART</a></li>
+                    <li><a href="/contact">CONTACT</a></li>
+                    {{ else }}
+                    <li><a href="/registration">NEW REGISTER</a></li>
+                    <li><a href="/login">LOGIN</a></li>
                     <li><a href="/home">HOME</a></li>
                     <li><a href="/menu">MENU</a></li>
                     <li><a href="/contact">CONTACT</a></li>
+                  {{/if}}
                 </ul>
             </div>
             <i class="bi bi-list" onclick="showMenu()"></i>
@@ -62,7 +71,7 @@
                   <img src="/Users/Joel/VSCode_workspace/ExperimentRichardsWineAndRumCakes/pic1.jpg">
               </div>-->
                 <div class="button">
-                    <a href="">Order Now</a>
+                    <a href="/menu">Order Now</a>
                 </div>
 
                 <div class="social">

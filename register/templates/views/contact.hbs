@@ -21,10 +21,29 @@
 </head>
 
 <body>
+    <section class="header">
+      <nav>
+            <a href="home.hbs"><img src="" alt="logo"></a>
+            <div class="nav-links" id="navLinks">
+                <!--to add cross closing icon-->
+                <i class="bi bi-x" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="/home">HOME</a></li>
+                    <li><a href="/aboutUs">ABOUT</a></li>
+                    <li><a href="/contact">CONTACT</a></li>
+                    <li><a href="/menu">BACK</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="heading">
+          <h3>Richard's Wine And Rum Cakes </h3>  
+        </div>      
+     </section>
     <div class="container">
         <div class="title">CONTACT US</div>
+        <div class="heading">Send Us Your Feedback/Queries</div>
         <form action="/processFeedback" method="post">  
-	    <div class="heading">Send Us Your Feedback/Queries</div>
+	    
         <div class="social">
                   <a href="https://www.facebook.com/Richards-wine-cakes-rum-cakes-190578039140727/" target="_blank" ><i class="bi bi-facebook"></i></a>
                   <a href="https://www.instagram.com/richards_wine_and_rum_cakes/" target="_blank"><s class="bi bi-instagram"></s></a>
@@ -37,13 +56,12 @@
 													<label class="label" for="name">Full Name</label>
 													<input type="text" class="form-control" name="name" id="name" placeholder="Name">
 												</div>
-											</div>
 											
 												<div class="input-box">
 													<label class="label" for="email">Email Address</label>
 													<input type="email" class="form-control" name="email" id="email" placeholder="Email">
 												
-											</div>
+											    </div>
 										
 												<div class="input-box">
 													<label class="label" for="subject">Subject</label>
@@ -54,13 +72,15 @@
 												<div class="input-box">
                                                     	
 													<label class="label" for="#">Message</label>
-													<textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>
-
-                                                    
+                                                    <input type="text" class="form-control" name="msg" id="message" size="100" placeholder="Your Message">
+													{{!-- <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>   --}}
 												</div>
+
                                                 <div class="button"> 
                                                     <input type="submit" value="Send Message">
                                                  </div>
+
+                                            </div>
 											
 						
 					

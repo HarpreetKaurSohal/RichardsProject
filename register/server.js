@@ -8,6 +8,7 @@ const router = express.Router()
 const app = express()
 let alert = require("alert")
 
+
 //email handler
 const nodemailer = require('nodemailer');
 
@@ -22,12 +23,14 @@ const UserOTPVerification = require("./src/models/UserOTPVerification");
 const ProductWine = require("./src/models/productWine");
 const ProductRum = require("./src/models/productRum");
 const ProductPlain = require("./src/models/productPlain");
+const Cart = require("./src/models/cart");
 
 
 //uqique string
 const{v4: uuidv4} = require("uuid");
 const { isBoolean, result } = require('lodash')
 const { callbackPromise } = require('nodemailer/lib/shared')
+const cart = require('./src/models/cart')
 //const UserOTPVerification = require('./src/models/UserOTPVerification')
 
 //env var
@@ -469,6 +472,86 @@ router.post("/verifyOtp" ,async(req,res)=>{
     }
     
 })
+router.get("/cart",(req,res) =>{
+    if(req.session.email)
+    {
+        if(!req.session.cart){
+            return res.render('cart',{products: null})
+        }
+        var cart = new Cart(req.session.cart);
+        res.render("cart",{name:req.session.name,products: cart.generateArray(),totalPrice: cart.totalPrice})
+    }
+    else{
+        alert("You're not logged in. Please login/register to continue")
+        res.render("menu")
+    }
+    
+});
 
+router.get('/add-cart-wine/:id',(req,res,next)=>{
+    if(req.session.email)
+    {
+    var productId = req.params.id;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+    ProductWine.findById(productId,(err,product)=>{
+        if(err){
+            return res.redirect('/home');
+        }
+        cart.add(product,product.id);
+        req.session.cart =cart;
+        console.log(req.session.cart);
+        alert("Item added.")
+        res.redirect('/wineCake');
+    });
+
+    }
+    else{
+        alert("Please Login to order your favorite cake.")
+    }
+});
+
+router.get('/add-cart-rum/:id',(req,res,next)=>{
+    if(req.session.email)
+    {
+    var productId = req.params.id;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+    ProductRum.findById(productId,(err,product)=>{
+        if(err){
+            return res.redirect('/home');
+        }
+        cart.add(product,product.id);
+        req.session.cart =cart;
+        console.log(req.session.cart);
+        alert("Item added.")
+        res.redirect('/rumCake');
+    });
+
+    }
+    else{
+        alert("Please Login to order your favorite cake.")
+    }
+});
+
+router.get('/add-cart-plain/:id',(req,res,next)=>{
+    if(req.session.email)
+    {
+    var productId = req.params.id;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+    ProductPlain.findById(productId,(err,product)=>{
+        if(err){
+            return res.redirect('/home');
+        }
+        cart.add(product,product.id);
+        req.session.cart =cart;
+        console.log(req.session.cart);
+        alert("Item added.")
+        res.redirect('/plainCake');
+    });
+
+    }
+    else{
+        alert("Please Login to order your favorite cake.")
+    }
+});
 
 module.exports = router
