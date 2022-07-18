@@ -104,3 +104,45 @@ nav .bi{
         padding: 30px;
     }
 }
+.items{
+    padding:10px;
+}
+.list{
+    color: maroon;
+    font-size: 145%;
+    font-style: normal;
+    display: inline;   
+}
+.total{
+    color: green;
+    font-size: 145%;
+    font-style: normal;   
+}
+.checkout button{
+    width: 150px;
+    height: 50px;
+     outline:none;
+    color:#fff;
+    border:none;
+    font-size:25px;
+    background:linear-gradient(135deg, purple, brown);
+    border-radius:9px;
+    font-weight:500;
+    letter-spacing:3px;
+}
+.checkout button input:hover{
+    background:linear-gradient(-135deg, green,purple);
+}
+.wrapper span{
+    width: 100%;
+    text-align: center;
+    font-weight: 400;
+    font-size: medium;
+    color: black;
+    cursor: pointer;
+}
+.wrapper span.num{
+    font-weight: 600;
+    border-right: 1px solid rgb(164, 60, 60);
+    border-left:  1px solid rgb(164, 60, 60);
+} 

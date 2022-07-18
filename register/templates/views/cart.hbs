@@ -38,48 +38,10 @@
                     num.innerText = a 
                 }
             })
-    </script>
-    <style>
-        .wrapper span{
-            width: 100%;
-            text-align: center;
-            font-weight: 400;
-            font-size: medium;
-            color: black;
-            cursor: pointer;
-        }
-        .wrapper span.num{
-            font-weight: 600;
-            border-right: 1px solid rgb(164, 60, 60);
-            border-left:  1px solid rgb(164, 60, 60);
-        } 
-        .list{
-            color: maroon;
-            font-size: 145%;
-            font-style: normal;
-            display: inline;   
-        }
-        .total{
-            color: green;
-            font-size: 145%;
-            font-style: normal;   
-        }
-        .checkout button{
-            width: 150px;
-            height: 50px;
-             outline:none;
-            color:#fff;
-            border:none;
-            font-size:25px;
-            background:linear-gradient(135deg, purple, brown);
-            border-radius:9px;
-            font-weight:500;
-            letter-spacing:3px;
-        }
-        .checkout button input:hover{
-            background:linear-gradient(-135deg, green,purple);
-        }
-    </style>
+            function checkout(){
+                location.href="/checkout";
+            }
+        </script>
 </head>
 <body>
     <section class="header">
@@ -105,6 +67,7 @@
      </section>
      <section class="items">
             <h2 class="head">YOUR SELECTS</h2><br>
+            
             {{# if products }}
             <div class="list">
                 {{# each products }}
@@ -112,25 +75,24 @@
                     <span class="minus">-</span>
                     <span class="num">1</span>
                     <span class="plus">+</span>
-                </div>    
-                    <label>{{ this.qty }}</label>
-                    <label>{{ this.item.title}}</label>
-                    <label>Rs.{{ this.price }}</label><br>
-                                    
-                
+                </div> 
+                <label>{{ this.qty }}</label>
+                <label>{{ this.item.title}}</label>
+                <label>Rs.{{ this.price }}</label><br>
                 {{/each}}
             </div>
-            <div class="total"> 
+            <div class="total">
                 <br><label>Total: {{ totalPrice}}</label><br><br>
             </div>
             <div class="checkout">
-                <button type="button">Checkout</button>
+                <button type="submit" onclick=checkout()>Checkout</button>
             </div>
             {{ else }}
             <div class="no-item">
                 <h4>No Items in Cart</h4>
             </div>
             {{/if}}
+            </form>
             
      </section>
 </body>

@@ -8,6 +8,16 @@ const router = express.Router()
 const app = express()
 let alert = require("alert")
 
+//payment gateway
+const qs = require("qs");
+const https = require("https");
+const url = require("url")
+const parseUrl = express.urlencoded({ extended: true });
+const parseJson = express.json({ extended: true });
+const checksum_lib = require("./Paytm/checksum");
+const config = require("./Paytm/config");
+var count=0
+
 
 //email handler
 const nodemailer = require('nodemailer');
@@ -24,6 +34,7 @@ const ProductWine = require("./src/models/productWine");
 const ProductRum = require("./src/models/productRum");
 const ProductPlain = require("./src/models/productPlain");
 const Cart = require("./src/models/cart");
+const Order = require("./src/models/order");
 
 
 //uqique string
@@ -31,6 +42,7 @@ const{v4: uuidv4} = require("uuid");
 const { isBoolean, result } = require('lodash')
 const { callbackPromise } = require('nodemailer/lib/shared')
 const cart = require('./src/models/cart')
+const { request } = require('http')
 //const UserOTPVerification = require('./src/models/UserOTPVerification')
 
 //env var
@@ -285,7 +297,7 @@ router.get("/aboutUs",(req,res)=>{
     else{
         res.render("aboutUs")
     }
-})
+});
 
 router.get("/home",(req,res) =>{
     if(req.session.email){
@@ -300,6 +312,7 @@ router.get("/about",(req,res) =>{
     res.render("aboutUs")
 });
 
+
 router.get("/contact",(req,res)=>{
     if(req.session.email)
     {
@@ -311,6 +324,8 @@ router.get("/contact",(req,res)=>{
     
 })
 
+
+//feedback/queries added in database
 router.post("/processFeedback",async(req,res)=>{
     try 
     {
@@ -345,7 +360,9 @@ router.post("/processFeedback",async(req,res)=>{
         alert("Your feedback not  sent");
         console.log(error)
     }
-})
+});
+
+//main menu
 router.get("/menu",(req,res) =>{
     if(req.session.email)
     {
@@ -356,6 +373,9 @@ router.get("/menu",(req,res) =>{
     }
     
 });
+
+
+//cake menus
 router.get("/wineCake",(req,res) =>{
     ProductWine.find(function(err,docs){
         var productChunks = [];
@@ -415,6 +435,7 @@ router.get("/plainCake",(req,res) =>{
 
 });
 
+//otp verification
 router.post("/verifyOtp" ,async(req,res)=>{
     const otp = req.body.otp
     const email = req.body.email
@@ -471,7 +492,10 @@ router.post("/verifyOtp" ,async(req,res)=>{
         
     }
     
-})
+});
+
+
+//cart links
 router.get("/cart",(req,res) =>{
     if(req.session.email)
     {
@@ -499,6 +523,7 @@ router.get('/add-cart-wine/:id',(req,res,next)=>{
         }
         cart.add(product,product.id);
         req.session.cart =cart;
+        req.session.totalPrice=cart.totalPrice;
         console.log(req.session.cart);
         alert("Item added.")
         res.redirect('/wineCake');
@@ -521,6 +546,7 @@ router.get('/add-cart-rum/:id',(req,res,next)=>{
         }
         cart.add(product,product.id);
         req.session.cart =cart;
+        req.session.totalPrice=cart.totalPrice;
         console.log(req.session.cart);
         alert("Item added.")
         res.redirect('/rumCake');
@@ -543,6 +569,7 @@ router.get('/add-cart-plain/:id',(req,res,next)=>{
         }
         cart.add(product,product.id);
         req.session.cart =cart;
+        req.session.totalPrice=cart.totalPrice;
         console.log(req.session.cart);
         alert("Item added.")
         res.redirect('/plainCake');
@@ -553,5 +580,105 @@ router.get('/add-cart-plain/:id',(req,res,next)=>{
         alert("Please Login to order your favorite cake.")
     }
 });
+
+//payment links
+router.get("/checkout",(req,res)=>{
+    // if(count==0)
+    // {   
+        var cart = new Cart(req.session.cart);
+        products=cart.generateArray()
+        res.render("checkout",{name:req.session.name,totalPrice: cart.totalPrice});
+        //count=1
+    // }
+    // else{
+        //res.render("callback",{name:req.session.name,email:req.session.email,cart:req.session.cart,totalPrice:cart.totalPrice})
+    //}
+});
+
+router.post("/paynow", [parseUrl, parseJson], (req, res) => {
+    // Route for making payment
+   
+    var paymentDetails = {
+      amount: req.body.amount,
+      customerId: req.body.name,
+      customerEmail: req.session.email,
+      customerPhone: req.body.phone
+  }
+  req.session.address=req.body.address
+  console.log(paymentDetails.amount,paymentDetails.customerId,paymentDetails.customerEmail);
+  if(!paymentDetails.amount || !paymentDetails.customerId || !paymentDetails.customerEmail || !paymentDetails.customerPhone) {
+      res.status(400).send('Payment failed')
+  } else {
+      var params = {};
+      params['MID'] = config.PaytmConfig.mid;
+      params['WEBSITE'] = config.PaytmConfig.website;
+      params['CHANNEL_ID'] = 'WEB';
+      params['INDUSTRY_TYPE_ID'] = 'Retail';
+      params['ORDER_ID'] = 'TEST_'  + new Date().getTime();
+      params['CUST_ID'] = paymentDetails.customerId;
+      params['TXN_AMOUNT'] = paymentDetails.amount;
+      params['CALLBACK_URL'] = 'http://localhost:3000/callback';
+      params['EMAIL'] = paymentDetails.customerEmail;
+      params['MOBILE_NO'] = paymentDetails.customerPhone;
+   
+   
+      checksum_lib.genchecksum(params, config.PaytmConfig.key, function (err, checksum) {
+          var txn_url = "https://securegw-stage.paytm.in/theia/processTransaction"; // for staging
+          // var txn_url = "https://securegw.paytm.in/theia/processTransaction"; // for production
+   
+          var form_fields = "";
+          for (var x in params) {
+              form_fields += "<input type='hidden' name='" + x + "' value='" + params[x] + "' >";
+          }
+          form_fields += "<input type='hidden' name='CHECKSUMHASH' value='" + checksum + "' >";
+   
+          res.writeHead(200, { 'Content-Type': 'text/html' });
+          res.write('<html><head><title>Merchant Checkout Page</title></head><body><center><h1>Please do not refresh this page...</h1></center><form method="post" action="' + txn_url + '" name="f1">' + form_fields + '</form><script type="text/javascript">document.f1.submit();</script></body></html>');
+          res.end();
+      });
+  }
+  });
+
+  router.post("/callback", (req, res) => {
+    
+    //res.send('payment sucess')
+    var name=req.session.name
+    var email=req.session.email
+    //var cart=req.session.cart
+    //var qty=req.session.cart.qty
+    //var total=req.session.totalPrice
+    console.log(name,email)
+    console.log(req.session.cart)
+    var cart = new Cart(req.session.cart);
+    var total=cart.totalPrice
+    console.log(name,email,total)
+    var order = new Order({
+        name: req.session.name,
+        cart: cart,
+        address: req.session.address,
+        email: req.session.email
+    });
+    order.save(function(err,result){
+        console.log("Entered order in database.")
+    });
+    
+    const mailOptions = {
+        from:"joelpatole4@gmail.com",
+        to:email,
+        subject:"Richards Wine And Rum Cake- Order Details",
+        html:`<p>Hello ${name},<br> Your cake order for ${cart.totalQty} cake for Rs.${total} was placed successfully. Order will be delivered within 4-5 business days.<br> 
+        Thankyou for choosing us. Hope to see you again with another order placement.</p>`,
+        
+    }
+    transpoter.sendMail(mailOptions)
+    .then(()=>{
+            console.log("Email Sent.");
+            res.status(201).render("callback",{email:email});
+            
+    });
+
+    alert("Payment successfull.. Bill receipt sent on your email id")
+    
+    });
 
 module.exports = router
