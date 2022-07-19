@@ -18,26 +18,39 @@
     <!--to add bootstrap icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" 
     integrity="sha384-eoTu3+HydHRBIjnCVwsFyCpUDZHZSFKEJD0mc3ZqSBSb6YhZzRHeiomAUWCstIWo" crossorigin="anonymous">
+    {{!-- <script 
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+    </script> --}}
     <script>
-            const plus = document.querySelector("#plus")
-            const minus = document.querySelector(".minus")
-            const num = document.querySelector(".num")
-
-            let a = 1
-            plus.addEventListener("click",()=>{
-                a++;
-                a = (a<10) ? "0" + a : a
-                num.innerText = a 
-                console.log(a)
-            })
-
-            minus.addEventListener("click",()=>{
-                if(a>1){
-                    a--;
-                     a = (a<10) ? "0" + a : a
-                    num.innerText = a 
+            /*price = document.getElementById("#prc")
+            console.log(price)
+            var a=1
+            $(document).ready(function(){
+            $(".plus").click(function(){
+                if(a<15)
+                {
+                    a=a+1
+                    $(".num").text(a)
                 }
-            })
+                else
+                {
+                    alert("max quantity is 15 ")
+                }
+            });
+            
+            $(".minus").click(function(){
+                if(a>1)
+                {
+                    a=a-1;
+                    $(".num").text(a)
+                }
+                else
+                {
+                    alert("quantity should atleast be 1. ThankYou")
+                }
+            });
+            });*/
+            
             function checkout(){
                 location.href="/checkout";
             }
@@ -71,11 +84,11 @@
             {{# if products }}
             <div class="list">
                 {{# each products }}
-                <div class="wrapper" style="background-color: rgb(177, 174, 174); display: flex; align-items: center; justify-content: center; width: 80px; height: 30px ; border-radius:5px ;">
+                {{!-- <div class="wrapper" style="background-color: rgb(177, 174, 174); display: flex; align-items: center; justify-content: center; width: 97px; height: 45px;  float:left; border-radius:5px ;">
                     <span class="minus">-</span>
                     <span class="num">1</span>
                     <span class="plus">+</span>
-                </div> 
+                </div>     --}}
                 <label>{{ this.qty }}</label>
                 <label>{{ this.item.title}}</label>
                 <label>Rs.{{ this.price }}</label><br>

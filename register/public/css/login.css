@@ -237,4 +237,11 @@
       background:linear-gradient(-135deg, purple,brown);
   }
   
-  
+   
+.forgotpassword{
+    color: blue;
+    float: left;
+    align-self: baseline;
+    font-size: 17px;
+    
+}

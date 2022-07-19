@@ -16,7 +16,7 @@ const parseUrl = express.urlencoded({ extended: true });
 const parseJson = express.json({ extended: true });
 const checksum_lib = require("./Paytm/checksum");
 const config = require("./Paytm/config");
-var count=0
+
 
 
 //email handler
@@ -27,6 +27,7 @@ const mongoose = require("./src/db/conn");
 //database connection
 require("./src/db/conn");
 //const mongoose = require("mongoose");
+//database schemas links
 const Register = require("./src/models/userRegister");
 const Feedback = require("./src/models/userFeedback");
 const UserOTPVerification = require("./src/models/UserOTPVerification");
@@ -35,6 +36,7 @@ const ProductRum = require("./src/models/productRum");
 const ProductPlain = require("./src/models/productPlain");
 const Cart = require("./src/models/cart");
 const Order = require("./src/models/order");
+const UserForgotOTPVerification = require("./src/models/UserForgotOTPVerification")
 
 
 //uqique string
@@ -583,18 +585,14 @@ router.get('/add-cart-plain/:id',(req,res,next)=>{
 
 //payment links
 router.get("/checkout",(req,res)=>{
-    // if(count==0)
-    // {   
+      
         var cart = new Cart(req.session.cart);
         products=cart.generateArray()
         res.render("checkout",{name:req.session.name,totalPrice: cart.totalPrice});
-        //count=1
-    // }
-    // else{
-        //res.render("callback",{name:req.session.name,email:req.session.email,cart:req.session.cart,totalPrice:cart.totalPrice})
-    //}
+        
 });
 
+//paytm connection function after user clicks pay in checkout
 router.post("/paynow", [parseUrl, parseJson], (req, res) => {
     // Route for making payment
    
@@ -639,14 +637,13 @@ router.post("/paynow", [parseUrl, parseJson], (req, res) => {
   }
   });
 
-  router.post("/callback", (req, res) => {
+  //after payment successfull call callback and save order in database
+  router.post("/callback", async(req, res) => {
     
     //res.send('payment sucess')
-    var name=req.session.name
-    var email=req.session.email
-    //var cart=req.session.cart
-    //var qty=req.session.cart.qty
-    //var total=req.session.totalPrice
+    var name= await(req.session.name)
+    var email= await(req.session.email)
+
     console.log(name,email)
     console.log(req.session.cart)
     var cart = new Cart(req.session.cart);
@@ -661,12 +658,12 @@ router.post("/paynow", [parseUrl, parseJson], (req, res) => {
     order.save(function(err,result){
         console.log("Entered order in database.")
     });
-    
+
     const mailOptions = {
         from:"joelpatole4@gmail.com",
         to:email,
         subject:"Richards Wine And Rum Cake- Order Details",
-        html:`<p>Hello ${name},<br> Your cake order for ${cart.totalQty} cake for Rs.${total} was placed successfully. Order will be delivered within 4-5 business days.<br> 
+        html:`<h1 style="font-size:23px;color:maroon;"  >ORDER CONFIRMATION</h1><br><p>Hello ${name},<br> Your cake order for <b>${cart.totalQty}</b> cake for <b>Rs.${total}</b> was placed successfully. Order will be delivered within 4-5 business days.<br> 
         Thankyou for choosing us. Hope to see you again with another order placement.</p>`,
         
     }
@@ -677,8 +674,258 @@ router.post("/paynow", [parseUrl, parseJson], (req, res) => {
             
     });
 
-    alert("Payment successfull.. Bill receipt sent on your email id")
+    alert("Payment successfull.. Order confirmation sent on your email id")
     
+    });
+
+    //render bill page 
+    router.get("/bill", (req, res) => {
+        if(req.session.email)
+        {
+            if(!req.session.cart){
+                alert("Unable to download file")
+            }
+            var cart = new Cart(req.session.cart);
+            res.render("bill",{name:req.session.name,email:req.session.email,address: req.session.address,products: cart.generateArray(),totalPrice: cart.totalPrice})
+        }
+        else{
+            alert("You're not logged in. Please login/register to continue")
+            res.render("menu")
+        }
+
+    });
+
+
+    //forgotOTP functionality
+    const sendVerificationEmailForgotPassword= (email,res)=>{
+        console.log("inside sendVerificationEmailForgotPassword()");
+        var num = Math.random()*9999
+        OTP=(Math.floor(num));
+        console.log(OTP)
+    
+        const mailOptions = {
+            from:"joelpatole4@gmail.com",
+            to:email,
+            subject:"MAIL TO CHANGE YOUR PASSWORD",
+            html:`<h1 style="color:maroon;" >Mail To Change Your Password</h1><p style="color:brown;"> Verify your Email address to change Password</p><p>This OTP <b>expires in 1 hour.</b></p>
+                  <p style=font-size:30px; style= "color:red;"> <b>OTP: ${OTP}</b></p>`,
+        }
+    
+        const UFOV = new UserForgotOTPVerification({
+            email:email,
+            otp:OTP,
+            createdAt:Date.now(),
+            expiresAt:Date.now() + 600000,
+    
+        })
+    
+        UFOV.save()
+        .then(()=>{
+            transpoter.sendMail(mailOptions)
+            .then(()=>{
+                console.log("Email Sent.");
+                res.status(201).render("ForgotOTP",{email:email});
+                
+                console.log("sucess in data entry")
+                            
+                /*res.json({
+                    status:"Pending",
+                    message:"otp sent"
+                })*/
+                return OTP
+            })
+            .catch((error)=>{
+                console.log(error)
+                    var myquery={email:email}
+                    Register.deleteOne(myquery,(err,obj)=>{
+                    if(err) throw err
+                     console.log("user-Data deleted")
+                    })
+                res.json({
+                    status:"failed",
+                    message:"error in sending otp"
+                })
+                //return false
+            })
+            
+        })
+        .catch((error)=>{
+            var myquery={email:email}
+            Register.deleteOne(myquery,(err,obj)=>{
+            if(err) throw err
+                console.log("user-Data deleted")
+            })
+            console.log(error)
+            //return false
+        })
+    
+    }
+
+    //forgot password updation done checking for OTP verification
+    router.post("/verifyForgottenOtp" ,async(req,res)=>{
+        console.log("inside /verifyForgottenOtp route")
+        const otp = req.body.otp
+        const email = req.body.email
+        console.log(email)
+        console.log(otp)
+        const userOtpDetails = await UserForgotOTPVerification.findOne({otp:otp});
+        console.log(userOtpDetails)
+        if(userOtpDetails)
+        {
+            if(userOtpDetails.expiresAt-userOtpDetails.createdAt > 600000)
+            {
+               alert('timeOut')
+               var myquery={otp:otp}
+               UserForgotOTPVerification.deleteOne(myquery,(err,obj)=>{
+                     if(err) throw err
+                     console.log("otp-Data deleted inside verifyForgottenOtp")
+                })
+               var myquery={email:email}
+                Register.deleteOne(myquery,(err,obj)=>{
+                     if(err) throw err
+                     console.log("user-Data deleted inside verifyForgottenOtp")
+                })
+            }
+            else
+            {
+                console.log(userOtpDetails)
+                alert("OTP Verified.")
+                res.render("login.hbs")
+                var myquery={otp:otp}
+                UserForgotOTPVerification.deleteOne(myquery,(err,obj)=>{
+                     if(err) throw err
+                     console.log("otp-Data deleted inside verifyForgottenOtp")
+                })
+    
+            }
+            
+        }
+        else{
+            alert('wrong otp')
+            console.log("wrong otp inside verifyForgottenOtp ")
+    
+            var myqueryotp= {email:email}
+            console.log(myqueryotp)
+            UserForgotOTPVerification.deleteOne(myqueryotp,(err,obj)=>{
+                     if(err) throw err
+                     console.log("otp-Data deleted inside verifyForgottenOtp")
+                })
+            var myqueryuser={email:email}
+                Register.deleteOne(myqueryuser,(err,obj)=>{
+                     if(err) throw err
+                     console.log("user-Data deleted inside verifyForgottenOtp")
+                })
+            res.render("login")
+            
+        }
+        
+    });
+
+
+    //forgot password route
+    router.get("/forgotPassword",(req,res) =>{
+        res.render("forgotPassword")
+    });
+    
+
+    router.post("/forgotPasswordOTP",async (req,res)=>{
+        app.use(bodyParser.urlencoded({ extended: true }));
+        const email=req.body.email;
+        const password = req.body.NewPassword;
+        const conPass = req.body.NewRePassword;
+        console.log(password)
+        console.log(conPass)
+    
+        //store the user details in this variable
+        const userDetails = await Register.findOne({email:email});
+        if(!userDetails)
+        {
+            alert("INCORRECT EMAIL ID")
+        }
+        else
+        {
+            console.log("got user details in /forgotPasswordOTP")
+            console.log(userDetails.fullname)
+            console.log(userDetails.mobileNum)
+            console.log(userDetails.email)
+            console.log(userDetails.address)
+            console.log("->",password)
+            console.log("->",conPass)
+        
+            //delete the user
+            var myquery={email:email}
+                Register.deleteOne(myquery,(err,obj)=>{
+                if(err) throw err
+                    console.log("user-Data deleted")
+                })
+                //console.log(error)
+            
+            //with the help of stored variable again save the user as new user
+            if(password === conPass)
+            {
+                console.log("inside pass==conpass")
+                const registerUser = await new Register({
+                fullname: userDetails.fullname,
+                mobileNum: userDetails.mobileNum,
+                email: userDetails.email,
+                address: userDetails.address,
+                password: req.body.NewPassword,
+                confirmPass: req.body.NewRePassword,
+                verified:false})
+        
+                const registered = registerUser.save()
+                                .then((result)=>{
+                                //handle account verification 
+                                console.log("trying to save reg data.", result);
+                                //(result,res);
+                                sendVerificationEmailForgotPassword(email,res)
+                                //res.status(201).render("login")
+                        
+                                })
+                                .catch((err)=>{
+                                console.log(err)
+                                    res.json({
+                                        err,
+                                        status:"failed",
+                                        message:"an error occured while saving"
+                                    })
+                                })
+            }
+            else{
+                alert("password do not match")
+                console.log("inside pass==conpass of else so that data is resaved again")
+                const registerUser = await new Register({
+                fullname: userDetails.fullname,
+                mobileNum: userDetails.mobileNum,
+                email: userDetails.email,
+                address: userDetails.address,
+                password: req.body.NewPassword,
+                confirmPass: req.body.NewRePassword,
+                verified:false})
+        
+                const registered = registerUser.save()
+                                .then((result)=>{
+                                //handle account verification 
+                                console.log("trying to save reg data in else.", result);
+                                //(result,res);
+                                //sendVerificationEmailForgotPassword(email,res)
+                                //res.status(201).render("login")
+                        
+                                })
+                                .catch((err)=>{
+                                console.log(err)
+                                    res.json({
+                                        err,
+                                        status:"failed",
+                                        message:"an error occured while saving in else block of /forgotPasswordOTP"
+                                    })
+                                })
+            }
+        }
+    
+        
+                 
+        
     });
 
 module.exports = router

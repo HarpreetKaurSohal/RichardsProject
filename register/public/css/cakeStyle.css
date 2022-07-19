@@ -223,3 +223,8 @@ nav .bi{
     color: #fff;
     transition: 1s;
 }
+.categories .box-container .big-box .addCart:hover{
+    background: #70002a;
+    color: #fff;
+    transition: 1s;
+}

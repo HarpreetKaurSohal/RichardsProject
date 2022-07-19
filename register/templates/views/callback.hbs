@@ -33,17 +33,22 @@
      </section>
      <section class="container">
         <h3>Welcome Back {{name}}</h3>
-        <p>Your cake order was successfully placed, we have forwarded your bill receipt on your entered email id.<br> 
+        {{!-- <p>Your cake order was successfully placed, we have forwarded your bill receipt on your entered email id.<br> 
         The order will be delivered in 4-5 business days.<br> 
-        Hope that you savour the taste and order again from our website.</p>
+        Hope that you savour the taste and order again from our website.</p> --}}
+        <p>Your cake order was successfully placed,The order will be delivered in 4-5 business days.<br>
+        Hope that you savour the taste and order again from our website. </p>
 
         <div>
             <button type="button" onclick="home()">Home Page</button>
+            <button type="button" onclick="mail()">Bill receipt</button>
         </div>     
         </section>
         <script>
             function home(){
                 location.href="/logout";
-                //location.href="/home";
+            }
+            function mail(){
+                location.href="/bill";
             }
         </script>
