@@ -180,7 +180,7 @@ const sendVerificationEmail = (email,res,_id)=>{
     const uniqueString = uuidv4() + _id;
     
      //otp creation
-     var num = Math.random()*9999
+     var num = 1000 + Math.random() * 9000
      OTP=(Math.floor(num));
      console.log(OTP)
 
@@ -743,7 +743,7 @@ router.post("/paynow", [parseUrl, parseJson], (req, res) => {
     //forgotOTP functionality
     const sendVerificationEmailForgotPassword= (email,res)=>{
         console.log("inside sendVerificationEmailForgotPassword()");
-        var num = Math.random()*9999
+        var num = 1000 + Math.random()*9000;
         OTP=(Math.floor(num));
         console.log(OTP)
     
