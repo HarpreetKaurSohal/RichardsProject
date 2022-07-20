@@ -22,39 +22,10 @@
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
     </script> --}}
     <script>
-            /*price = document.getElementById("#prc")
-            console.log(price)
-            var a=1
-            $(document).ready(function(){
-            $(".plus").click(function(){
-                if(a<15)
-                {
-                    a=a+1
-                    $(".num").text(a)
-                }
-                else
-                {
-                    alert("max quantity is 15 ")
-                }
-            });
-            
-            $(".minus").click(function(){
-                if(a>1)
-                {
-                    a=a-1;
-                    $(".num").text(a)
-                }
-                else
-                {
-                    alert("quantity should atleast be 1. ThankYou")
-                }
-            });
-            });*/
-            
             function checkout(){
                 location.href="/checkout";
             }
-        </script>
+    </script>
 </head>
 <body>
     <section class="header">
@@ -83,16 +54,33 @@
             
             {{# if products }}
             <div class="list">
-                {{# each products }}
                 {{!-- <div class="wrapper" style="background-color: rgb(177, 174, 174); display: flex; align-items: center; justify-content: center; width: 97px; height: 45px;  float:left; border-radius:5px ;">
                     <span class="minus">-</span>
                     <span class="num">1</span>
                     <span class="plus">+</span>
                 </div>     --}}
-                <label>{{ this.qty }}</label>
-                <label>{{ this.item.title}}</label>
-                <label>Rs.{{ this.price }}</label><br>
-                {{/each}}
+                
+                <table>
+                <tr>
+                    <th class="qty">Quantity</th>
+                    <th class="nm">Name</th>
+                    <th class="pr">Price</th>
+                </tr>
+                {{# each products }}
+                <tr>
+                    <td>
+                        <div class="inc-dec">
+                            <button type="button"><a class="btn-inc"href="/decre/{{this.item._id}}">-</a></button>
+                            <button type="button" id="button-value">{{ this.qty }}</button>
+                            <button type="button"><a class="btn-dec"href="/incre/{{this.item._id}}">+</a></button>
+                        </div>
+                    </td>
+                    <td>{{ this.item.title }}</td>
+                    <td>Rs.{{ this.price }}</td>
+                    <td><a class="btn-del" href="/delete/{{this.item._id}}"><i class="bi bi-trash3"></i></a></td>
+                </tr>
+                 {{/each}}
+            </table><br>
             </div>
             <div class="total">
                 <br><label>Total: {{ totalPrice}}</label><br><br>

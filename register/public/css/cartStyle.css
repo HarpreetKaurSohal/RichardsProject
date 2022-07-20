@@ -109,9 +109,7 @@ nav .bi{
 }
 .list{
     color: maroon;
-    font-size: 145%;
-    font-style: normal;
-    display: inline;   
+    font-style: normal;  
 }
 .total{
     color: green;
@@ -146,3 +144,45 @@ nav .bi{
     border-right: 1px solid rgb(164, 60, 60);
     border-left:  1px solid rgb(164, 60, 60);
 } 
+.qty,.pr{
+    width: 130px;
+}
+.nm{
+    width: 250px;
+}
+.qty,.nm,.pr{
+    font-size: 18px;
+    border: 1.5px solid black;
+}
+th,td{
+    font-size: 18px;
+    padding:5px;
+}
+.inc-dec{
+    font-size: 18px;
+}
+.inc-dec button{
+    width: 30px;
+    border-radius: 5px;
+}
+
+/* remove underline from <a href> */
+a:link{
+    text-decoration: none;
+}
+a:visited{
+    text-decoration: none;
+}
+a:active{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+
+.btn-dec,.btn-inc{
+    color: black;
+}
+.btn-del{
+    color: maroon;
+}

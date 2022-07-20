@@ -37,7 +37,7 @@
     </div>
     <section>
         <div class="order-details">
-            {{# each products }}
+            
             <h4>Order Details-</h4>
             <table>
                 <tr>
@@ -45,13 +45,15 @@
                     <th class="nm">Name</th>
                     <th class="pr">Price</th>
                 </tr>
+                {{# each products }}
                 <tr>
                     <td>{{ this.qty }}</td>
                     <td>{{ this.item.title }}</td>
                     <td>Rs.{{ this.price }}</td>
                 </tr>
+                 {{/each}}
             </table><br>
-            {{/each}}
+           
         </div>
 
         <div class="total">

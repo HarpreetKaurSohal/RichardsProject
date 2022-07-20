@@ -583,6 +583,50 @@ router.get('/add-cart-plain/:id',(req,res,next)=>{
     }
 });
 
+//increment, decrement and delete on cart
+router.get('/incre/:id',(req,res)=>{
+    if(req.session.email)
+    {
+        var productId = req.params.id;
+        var cart=new Cart(req.session.cart);
+        cart.incre(productId);
+        req.session.cart=cart;
+        //console.log(cart)
+        res.render("cart",{name:req.session.name,products: cart.generateArray(),totalPrice: cart.totalPrice})
+    }
+    else{
+        alert("Error!!")
+    }
+});
+router.get("/decre/:id",(req,res)=>{
+    if(req.session.email)
+    {
+        var productId = req.params.id;
+        var cart=new Cart(req.session.cart);
+        cart.decre(productId);
+        req.session.cart=cart;
+        //console.log(cart);
+        res.render("cart",{name:req.session.name,products: cart.generateArray(),totalPrice: cart.totalPrice})
+    }
+    else{
+        alert("Error!!")
+    }
+});
+router.get("/delete/:id",(req,res)=>{
+    if(req.session.email)
+    {
+        var productId = req.params.id;
+        var cart=new Cart(req.session.cart);
+        cart.delete(productId);
+        req.session.cart=cart;
+        //console.log(cart);
+        res.render("cart",{name:req.session.name,products: cart.generateArray(),totalPrice: cart.totalPrice})
+    }
+    else{
+        alert("Error!!")
+    }
+});
+
 //payment links
 router.get("/checkout",(req,res)=>{
       
