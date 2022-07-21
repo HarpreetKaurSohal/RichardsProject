@@ -681,12 +681,15 @@ router.post("/paynow", [parseUrl, parseJson], (req, res) => {
   }
   });
 
-  //after payment successfull call callback and save order in database
-  router.post("/callback", async(req, res) => {
-    
-    //res.send('payment sucess')
-    var name= await(req.session.name)
-    var email= await(req.session.email)
+   //after payment successfull call callback and save order in database
+   router.post("/callback",(req,res)=>{
+  
+    res.render("confirm")    
+})
+
+router.get("/confirmation",(req,res)=>{
+    var name= req.session.name
+    var email= req.session.email
 
     console.log(name,email)
     console.log(req.session.cart)
@@ -719,8 +722,7 @@ router.post("/paynow", [parseUrl, parseJson], (req, res) => {
     });
 
     alert("Payment successfull.. Order confirmation sent on your email id")
-    
-    });
+  })//confirmation End
 
     //render bill page 
     router.get("/bill", (req, res) => {
