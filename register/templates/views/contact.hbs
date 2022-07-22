@@ -23,7 +23,7 @@
 <body>
     <section class="header">
       <nav>
-            <a href="home.hbs"><img src="" alt="logo"></a>
+            <a href="home.hbs"><img src="/css/logo.jpg" class="logo"alt="logo"></a>
             <div class="nav-links" id="navLinks">
                 <!--to add cross closing icon-->
                 <i class="bi bi-x" onclick="hideMenu()"></i>
@@ -45,34 +45,34 @@
         <form action="/processFeedback" method="post">  
 	    
         <div class="social">
-                  <a href="https://www.facebook.com/Richards-wine-cakes-rum-cakes-190578039140727/" target="_blank" ><i class="bi bi-facebook"></i></a>
-                  <a href="https://www.instagram.com/richards_wine_and_rum_cakes/" target="_blank"><s class="bi bi-instagram"></s></a>
-                  <a href="#" target="_blank"><d class="bi bi-whatsapp"></d></a>
-                  <div class="social-text">you can contact us on our various social media pages</div>
-                </div>
+                <a href="https://www.facebook.com/Richards-wine-cakes-rum-cakes-190578039140727/" target="_blank" ><i class="bi bi-facebook"></i></a>
+                <a href="https://www.instagram.com/richards_wine_and_rum_cakes/" target="_blank"><s class="bi bi-instagram"></s></a>
+                <d id="whatsapp" class="bi bi-whatsapp"></d></a>
+                <div class="social-text">you can contact us on our various social media pages</div>
+        </div>
 
                     <div class="user-inputs">
 												<div class="input-box">
 													<label class="label" for="name">Full Name</label>
-													<input type="text" class="form-control" name="name" id="name" placeholder="Name">
+													<input type="text" class="form-control" name="name" id="name" size="50"placeholder="Name">
 												</div>
 											
 												<div class="input-box">
 													<label class="label" for="email">Email Address</label>
-													<input type="email" class="form-control" name="email" id="email" placeholder="Email">
+													<input type="email" class="form-control" name="email" id="email" size="50" placeholder="Email">
 												
 											    </div>
 										
 												<div class="input-box">
 													<label class="label" for="subject">Subject</label>
-													<input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
+													<input type="text" class="form-control" name="subject" id="subject" size="100" placeholder="Subject">
 												</div>
 											
 								
 												<div class="input-box">
                                                     	
 													<label class="label" for="#">Message</label>
-                                                    <input type="text" class="form-control" name="msg" id="message" size="100" placeholder="Your Message">
+                                                    <input type="text" class="form-control" name="msg" id="message" size="150" placeholder="Your Message">
 													{{!-- <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Message"></textarea>   --}}
 												</div>
 

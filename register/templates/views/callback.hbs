@@ -24,28 +24,30 @@
     <section class="header">
       <nav>
         <div class="logo">
-            <a href="home.hbs"><img src="" alt="logo"></a>
-            <label class="user">Hello, {{name}}</label>
+            <a href="home.hbs"><img src="/css/logo.jpg" class="logo"alt="logo"></a>
+            <label class="user">{{name}}</label>
         </div>
         <div class="heading">
           <h3>Richard's Wine And Rum Cakes </h3>  
         </div>      
      </section>
      <section class="container">
-        <h3>Welcome Back {{name}}</h3>
+        <h3>Welcome Back, <b>{{name}}</b></h3><br>
         {{!-- <p>Your cake order was successfully placed, we have forwarded your bill receipt on your entered email id.<br> 
         The order will be delivered in 4-5 business days.<br> 
         Hope that you savour the taste and order again from our website.</p> --}}
-        <p>Your cake order was successfully placed,The order will be delivered in 4-5 business days.<br>
+        <p>Your cake order was successfully placed, we have forwarded an order confirmation mail to your registered email id.
+        <br>The order will be delivered in 4-5 business days.<br>
         Hope that you savour the taste and order again from our website. </p>
 
         <div>
-            <button type="button" onclick="home()">Home Page</button>
-            <button type="button" onclick="mail()">Bill receipt</button>
+            <button type="button" class="btn" onclick="home()"><label class="lbl">Home Page</label></button>
+            <button type="button" class="btn" onclick="mail()"><label class="lbl">Bill receipt</label></button>
         </div>     
         </section>
         <script>
             function home(){
+                //req.session.cart={};
                 location.href="/home";
             }
             function mail(){

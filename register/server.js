@@ -7,6 +7,7 @@ const client = redis.createClient();
 const router = express.Router()
 const app = express()
 let alert = require("alert")
+var count=0;
 
 //payment gateway
 const qs = require("qs");
@@ -54,7 +55,9 @@ app.use(session({
     secret: 'harpreetjoel',
     store: new redisStore({host:'localhost', port: 6379, client: client, ttl: 500}),
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    maxAge: new Date(Date.now() + 3600000),
+    expires: new Date(Date.now() + 3600000)
 }))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -108,55 +111,54 @@ router.post("/userRegister", async (req,res) =>{
            const email=req.body.email;
            const password = req.body.password;
            const conPass = req.body.confirmPass;
-            if(password === conPass)
-            {
-              const registerUser = new Register({
-                fullname: req.body.fullname,
-                mobileNum: req.body.mobileNum,
-                email: req.body.email,
-                address: req.body.address,
-                password: password,
-                confirmPass: conPass,
-                verified:false})
-                
-                const userDetails = await Register.findOne({email:email});
-                console.log('entered email is, ',email)
-               //console.log('user wala email is, ',userDetails.email)
-                if(userDetails)
+                if(password === conPass)
                 {
-                   alert('Email alredy registered, please login')
-                   res.render("login.hbs")
+                        const registerUser = new Register({
+                        fullname: req.body.fullname,
+                        mobileNum: req.body.mobileNum,
+                        email: req.body.email,
+                        address: req.body.address,
+                        password: password,
+                        confirmPass: conPass,
+                        verified:false})
+                        
+                        const userDetails = await Register.findOne({email:email});
+                        console.log('entered email is, ',email)
+                       //console.log('user wala email is, ',userDetails.email)
+                        if(userDetails)
+                        {
+                           alert('Email alredy registered, please login')
+                           res.render("login.hbs")
+                        }
+                        else
+                        {
+                                  //if(opt == res.otp)
+                                 const registered = await registerUser.save()
+                                .then((result)=>{
+                                //handle account verification 
+                                console.log("trying to save reg data.", result);
+                                //(result,res);
+                                sendVerificationEmail(req.body.email,res,registerUser._id)
+                                //res.status(201).render("login")
+                        
+                                 })
+                                .catch((err)=>{
+                                console.log(err)
+                                res.json({
+                                    err,
+                                    status:"failed",
+                                    message:"an error occured while saving"
+                                })
+                                })
+                        }
+                    
+                      //res.status(201).render("login");
+                      //else wrong otp
                 }
                 else
                 {
-                          //if(opt == res.otp)
-                         const registered = await registerUser.save()
-                        .then((result)=>{
-                        //handle account verification 
-                        console.log("trying to save reg data.", result);
-                        //(result,res);
-                        sendVerificationEmail(req.body.email,res,registerUser._id)
-                        //res.status(201).render("login")
-                
-                         })
-                        .catch((err)=>{
-                        console.log(err)
-                        res.json({
-                            err,
-                            status:"failed",
-                            message:"an error occured while saving"
-                        })
-                        })
+                    alert("Passwords do not match");
                 }
-            
-              //res.status(201).render("login");
-              //else wrong otp
-             }
-             else 
-             {
-               alert("Passwords do not match");
-             }
-
             //send otp to mail logic
                         
 
@@ -302,11 +304,24 @@ router.get("/aboutUs",(req,res)=>{
 });
 
 router.get("/home",(req,res) =>{
-    if(req.session.email){
-        res.render("newHome",{name:req.session.name})
+    if(count==0)
+    {
+        if(req.session.email){
+            res.render("newHome",{name:req.session.name})
+        }
+        else{
+            res.render("home")
+        }
     }
-    else{
-        res.render("home")
+    else
+    {
+        if(req.session.email){
+            req.session.cart={};
+            res.render("newHome",{name:req.session.name})
+        }
+        else{
+            res.render("home")
+        }
     }
 });
 
@@ -681,48 +696,56 @@ router.post("/paynow", [parseUrl, parseJson], (req, res) => {
   }
   });
 
-   //after payment successfull call callback and save order in database
-   router.post("/callback",(req,res)=>{
-  
-    res.render("confirm")    
-})
+  //after payment successfull call callback and save order in database
+router.post("/callback",(req,res)=>{
+  res.redirect("/confirmation")    
+});
 
 router.get("/confirmation",(req,res)=>{
-    var name= req.session.name
-    var email= req.session.email
+    count=1;
+    if(req.session.name){
+        //res.send('payment sucess')
+        var name= req.session.name
+        var email= req.session.email
 
-    console.log(name,email)
-    console.log(req.session.cart)
-    var cart = new Cart(req.session.cart);
-    var total=cart.totalPrice
-    console.log(name,email,total)
-    var order = new Order({
-        name: req.session.name,
-        cart: cart,
-        address: req.session.address,
-        email: req.session.email
-    });
-    order.save(function(err,result){
-        console.log("Entered order in database.")
-    });
+        console.log(name,email)
+        console.log(req.session.cart)
+        var cart = new Cart(req.session.cart);
+        var total=cart.totalPrice
+        console.log(name,email,total)
+        var order = new Order({
+            name: req.session.name,
+            cart: cart,
+            address: req.session.address,
+            email: req.session.email
+        });
+        order.save(function(err,result){
+            console.log("Entered order in database.")
+        });
 
-    const mailOptions = {
-        from:"joelpatole4@gmail.com",
-        to:email,
-        subject:"Richards Wine And Rum Cake- Order Details",
-        html:`<h1 style="font-size:23px;color:maroon;"  >ORDER CONFIRMATION</h1><br><p>Hello ${name},<br> Your cake order for <b>${cart.totalQty}</b> cake for <b>Rs.${total}</b> was placed successfully. Order will be delivered within 4-5 business days.<br> 
-        Thankyou for choosing us. Hope to see you again with another order placement.</p>`,
+        const mailOptions = {
+            from:"joelpatole4@gmail.com",
+            to:email,
+            subject:"Richards Wine And Rum Cake- Order Details",
+            html:`<h1 style="font-size:23px;color:maroon;"  >ORDER CONFIRMATION</h1><br><p>Hello ${name},<br> Your cake order for <b>${cart.totalQty}</b> cake for <b>Rs.${total}</b> was placed successfully. Order will be delivered within 4-5 business days.<br> 
+            Thankyou for choosing us. Hope to see you again with another order placement.</p>`,
         
-    }
-    transpoter.sendMail(mailOptions)
-    .then(()=>{
+        }
+        transpoter.sendMail(mailOptions)
+        .then(()=>{
             console.log("Email Sent.");
-            res.status(201).render("callback",{email:email});
+            res.status(201).render("callback",{name:name});
             
-    });
+        });
 
-    alert("Payment successfull.. Order confirmation sent on your email id")
-  })//confirmation End
+        alert("Payment successfull.. Order confirmation sent on your email id")
+
+    }
+    else{
+        alert("Some error occured while payment. Please try again.")
+        res.render("home");
+    }
+  });//confirmation End
 
     //render bill page 
     router.get("/bill", (req, res) => {

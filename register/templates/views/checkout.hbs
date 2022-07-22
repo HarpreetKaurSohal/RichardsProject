@@ -24,8 +24,8 @@
     <section class="header">
       <nav>
         <div class="logo">
-            <a href="home.hbs"><img src="" alt="logo"></a>
-            <label class="user">Hello, {{name}}</label>
+            <a href="home.hbs"><img src="/css/logo.jpg" class="logo"alt="logo"></a>
+            <label class="user">{{name}}</label>
         </div>
             <div class="nav-links" id="navLinks">
                 <!--to add cross closing icon-->
@@ -43,29 +43,29 @@
         </div>      
      </section>
      <section class="container">
-        <h1>Checkout</h1>
-        <h4>Your Total:</h4>
+        <h1 style="font-weight:bold;">Checkout</h1><br>
+        <h4>Enter details:</h4>
         <form action="/paynow" method="post" id="checkout">
             <div class="details">
                 <div class="input-details">
-                    <label for="name">First Name</label>
-                    <input type="text" id="name" class="name" name="name" required>
+                    <label for="name">First Name:</label>
+                    <input type="text" id="name" class="inp" name="name" size="50" placeholder="enter only first name without space" required>
                 </div>
                 <div class="input-details">
-                    <label for="address">Shipping Address</label>
-                    <input type="text" id="address" class="address" name="address" size="50" required>
+                    <label for="address">Shipping Address:</label>
+                    <input type="text" id="address" class="inp" name="address" placeholder="enter full address with city and pin-code" size="100" required>
                 </div>
                 <div class="input-details">
-                    <label for="phone">Phone number</label>
-                    <input type="tel" id="phone" class="phone" name="phone" required>
+                    <label for="phone">Phone number:</label>
+                    <input type="tel" id="phone" class="inp" name="phone" size="20" placeholder="0123456789" required>
                 </div>
                 <div class="input-details">
-                    <label for="amount">Amount</label>
-                    <input type="text" id="amount" class="amount" name="amount" value="{{totalPrice}}" readonly>
+                    <label for="amount">Amount:</label>
+                    <input type="text" id="amount" class="inp" name="amount" size="20" value="{{totalPrice}}" readonly>
                 </div>
-            </div>
+            </div><br>
             <div class="btn">
-                <button class="pay-btn">Pay Now</button>
+                <input class="pay-btn"type="submit" value="Pay Now">
             </div>
         </form>
      </section>

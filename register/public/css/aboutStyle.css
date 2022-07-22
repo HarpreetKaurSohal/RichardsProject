@@ -5,6 +5,11 @@
     /*background-color:#fff3f3*/
  
 }
+.logo{
+    height: 60px;
+    width: 60px;
+    border-radius: 100px;
+}
 .header{
     /*min-height: 100vh;*/
     min-height:200px;
@@ -17,7 +22,8 @@
 
 nav{
     display:flex;
-    padding: 2% 6%;
+    padding: 1% 6%;
+    padding-right: 15px;
     justify-content: space-between;
     align-items: center;
 }

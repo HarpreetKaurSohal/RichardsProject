@@ -4,6 +4,11 @@
     box-sizing:border-box;
     font-family: 'poppins',sans-serif;
   }
+  .logo{
+    height: 60px;
+    width: 60px;
+    border-radius: 100px;
+}
   
   body
   {
@@ -30,7 +35,7 @@
 
 nav{
     display:flex;
-    padding: 2% 6%;
+    padding: 1% 6%;
     justify-content: space-between;
     align-items: center;
 }
@@ -123,7 +128,7 @@ nav .bi{
       /*background:white;*/
       padding:15px 15px;
       border-radius:10px;
-      opacity:75%;
+      /* opacity:75%; */
       
      
   }
@@ -204,31 +209,22 @@ nav .bi{
     color: black;
   }
 
-  .social{
+.social{
     margin-top: 50px;
     padding: 10px;
-}
-
-.social .social-text{
-    font: bold;
-    color:black;
-    font-weight: 600;
-    
-}
-
- .social i{
-    color: #a52a2a;
+}.social i{
+    color: blue;
     font-size: 30px;
     padding: 0px 10px;
 }
  .social i:hover{
-    color: skyblue;
+    color: steelblue;
     font-size: 30px;
     padding: 0px 10px;
 }
 
  .social s{
-    color: #a52a2a;
+    color: purple;
     font-size: 30px;
     padding: 0px 10px;
 }
@@ -239,15 +235,23 @@ nav .bi{
 }
 
  .social d{
-    color: #a52a2a;
-    font-size: 30px;
-    padding: 0px 10px;
-}
- .social d:hover{
     color: green;
     font-size: 30px;
     padding: 0px 10px;
 }
+ .social d:hover{
+    color: lightgreen;
+    font-size: 30px;
+    padding: 0px 10px;
+}
+
+.social .social-text{
+    font: bold;
+    color:black;
+    font-weight: 600;
+    
+}
+
 
 .container .input-box input:focus
 {

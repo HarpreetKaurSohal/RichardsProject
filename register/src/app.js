@@ -4,13 +4,16 @@ const { findSourceMap } = require("module");
 const path = require("path");
 const { URLSearchParams } = require("url");
 const app = express();
+//const redisStore = require('connect-redis')(session)
 
 //session 
 var session = require("express-session");
 app.use(session({
     secret: 'harpreetjoel',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    maxAge: new Date(Date.now() + 3600000),
+    expires: new Date(Date.now() + 3600000)
 }))
 app.use(express.urlencoded({extended:false}))
 app.use(express.json());
