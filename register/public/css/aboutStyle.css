@@ -14,7 +14,7 @@
     /*min-height: 100vh;*/
     min-height:200px;
     width: 100%;
-    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(pic2.jpg) ;
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(plum1.jpeg ) ;
     background-position: center;
     background-size: cover;
     position: relative;
@@ -22,8 +22,7 @@
 
 nav{
     display:flex;
-    padding: 1% 6%;
-    padding-right: 15px;
+    padding: 1% 5%;
     justify-content: space-between;
     align-items: center;
 }
@@ -138,40 +137,48 @@ nav .bi{
 
 }
 
-.content-section .content .social{
-    margin-top: 15px;
+.social{
+    margin-top: 10px;
+    padding: 10px;
 }
 
-.content-section .content .social i{
-    color: #a52a2a;
-    font-size: 30px;
-    padding: 0px 10px;
+.social .social-text{
+    font: bold;
+    color:black;
+    font-weight: 600;
+    
 }
-.content-section .content .social i:hover{
+
+ .social i{
     color: blue;
-    font-size: 30px;
+    font-size: 40px;
+    padding: 0px 10px;
+}
+ .social i:hover{
+    color: steelblue;
+    font-size: 42px;
     padding: 0px 10px;
 }
 
-.content-section .content .social s{
-    color: #a52a2a;
-    font-size: 30px;
-    padding: 0px 10px;
-}
-.content-section .content .social s:hover{
+ .social s{
     color: purple;
-    font-size: 30px;
+    font-size: 40px;
+    padding: 0px 10px;
+}
+ .social s:hover{
+    color:plum;
+    font-size: 42px;
     padding: 0px 10px;
 }
 
-.content-section .content .social d{
-    color: #a52a2a;
-    font-size: 30px;
+ .social d{
+    color: green;
+    font-size: 40px;
     padding: 0px 10px;
 }
-.content-section .content .social d:hover{
-    color: green;
-    font-size: 30px;
+ .social d:hover{
+    color: lightgreen;
+    font-size: 42px;
     padding: 0px 10px;
 }
 

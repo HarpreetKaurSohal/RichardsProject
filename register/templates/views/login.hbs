@@ -24,12 +24,24 @@
 </head>
 <body>
     <div class="container"> 
-        
+         <nav>
+            <div class="nav-links" id="navLinks">
+                <!--to add cross closing icon-->
+                <i class="bi bi-x" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="/registration">NEW REGISTER</a></li>
+                    <li><a href="/home">BACK</a></li>
+                </ul>
+            </div>
+            <i class="bi bi-list" onclick="showMenu()"></i>
+        </nav>
         
         <div class="title">RICHARDS WINE AND RUM CAKE</div>
-        <form action="/userLogin" method="post">  
+        <form action="/userLogin" method="post">
         <div class="heading">Login To Book Your Order </div>
         
+        
+
         <div class="user-details">
              <div class="input-box"> 
                 <span class="details">UserName</span>

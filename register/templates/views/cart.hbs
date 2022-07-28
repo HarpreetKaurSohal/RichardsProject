@@ -31,7 +31,7 @@
     <section class="header">
       <nav>
         <div class="logo">
-            <a href="home.hbs"><img src="/css/logo.jpg" class="logo-pic"alt="logo"></a>
+            <a href="/home"><img src="/css/logo.jpg" class="logo-pic"alt="logo"></a>
             <label class="user">{{name}}</label>
         </div>
             <div class="nav-links" id="navLinks">
@@ -41,7 +41,7 @@
                     <li><a href="/home">HOME</a></li>
                     <li><a href="/aboutUs">ABOUT</a></li>
                     <li><a href="/contact">CONTACT</a></li>
-                    <li><a href="/menu">BACK</a></li>
+                    <li><a href="/menu">BACK TO MENU</a></li>
                 </ul>
             </div>
         </nav>
@@ -90,7 +90,7 @@
             </div>
             {{ else }}
             <div class="no-item">
-                <h4>No Items in Cart</h4>
+                <h4>No Items in Cart! <i class="bi bi-emoji-frown"></i></h4>
             </div>
             {{/if}}
             </form>

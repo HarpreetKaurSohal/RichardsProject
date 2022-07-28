@@ -4,27 +4,27 @@ mongoose.connect('mongodb://localhost:27017/registration');
 
 var products = [
     new ProductWine({
-        imagePath: '/css/plum.jpeg',
+        imagePath: '/css/plumWineCake.jpg',
         title: 'Plum Wine Cake',
         price: 250
     }),
     new ProductWine({
-        imagePath: '/css/cranberry.jpeg',
+        imagePath: '/css/CranberryWineCake.jpg',
         title: 'Cranberry Wine Cake',
         price: 280
     }),
     new ProductWine({
-        imagePath: '/css/cherry.jpg',
+        imagePath: '/css/CherryWineCake.jpg',
         title: 'Cherry Wine Cake',
         price: 290
     }),
     new ProductWine({
-        imagePath: '/css/blueberry.jpg',
+        imagePath: '/css/BlueberryWineCake.jpg',
         title: 'Blueberry Wine Cake',
         price: 350
     }),
     new ProductWine({
-        imagePath: '/css/strawberry.jpeg',
+        imagePath: '/css/StrawberryWineCake.jpg',
         title: 'Strawberry Wine Cake',
         price: 280
     })

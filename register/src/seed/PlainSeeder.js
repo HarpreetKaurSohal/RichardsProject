@@ -4,27 +4,27 @@ mongoose.connect('mongodb://localhost:27017/registration');
 
 var products = [
     new ProductPlain({
-        imagePath: '/css/plum.jpeg',
+        imagePath: '/css/plainWalnut.jpg',
         title: 'Walnut Cake',
         price: 150
     }),
     new ProductPlain({
-        imagePath: '/css/cranberry.jpeg',
+        imagePath: '/css/ChocoWalnutCake2.jpeg',
         title: 'Choco Walnut Cake',
         price: 200
     }),
     new ProductPlain({
-        imagePath: '/css/cherry.jpg',
+        imagePath: '/css/CherryWalnutCake.jpeg',
         title: 'Cherry Plain Cake',
         price: 290
     }),
     new ProductPlain({
-        imagePath: '/css/blueberry.jpg',
+        imagePath: '/css/RoseCake.jpeg',
         title: 'Rose Cake',
         price: 150
     }),
     new ProductPlain({
-        imagePath: '/css/strawberry.jpeg',
+        imagePath: '/css/PlainCake3.jpeg',
         title: 'Vanilla Sponge Cake',
         price: 150
     })

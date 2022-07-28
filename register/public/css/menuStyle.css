@@ -15,7 +15,7 @@
     /*min-height: 100vh;*/
     min-height:190px;
     width: 100%;
-    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(pic2.jpg) ;
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(blueberry.jpeg) ;
     background-position: center;
     background-size: cover;
     position: relative;
@@ -23,7 +23,7 @@
 
 nav{
     display:flex;
-    padding: 1% 6%;
+    padding: 1% 5%;
     justify-content: space-between;
     align-items: center;
 }

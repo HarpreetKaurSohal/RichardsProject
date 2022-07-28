@@ -784,7 +784,7 @@ router.get("/confirmation",(req,res)=>{
             email:email,
             otp:OTP,
             createdAt:Date.now(),
-            expiresAt:Date.now() + 600000,
+            expiresAt:Date.now() + 600000
     
         })
     
@@ -873,18 +873,8 @@ router.get("/confirmation",(req,res)=>{
             alert('wrong otp')
             console.log("wrong otp inside verifyForgottenOtp ")
     
-            var myqueryotp= {email:email}
-            console.log(myqueryotp)
-            UserForgotOTPVerification.deleteOne(myqueryotp,(err,obj)=>{
-                     if(err) throw err
-                     console.log("otp-Data deleted inside verifyForgottenOtp")
-                })
-            var myqueryuser={email:email}
-                Register.deleteOne(myqueryuser,(err,obj)=>{
-                     if(err) throw err
-                     console.log("user-Data deleted inside verifyForgottenOtp")
-                })
-            res.render("login")
+            alert("Enter OTP again")
+            res.status(201).render("ForgotOTP",{email:email});
             
         }
         

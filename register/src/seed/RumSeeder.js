@@ -4,27 +4,27 @@ mongoose.connect('mongodb://localhost:27017/registration');
 
 var products = [
     new ProductRum({
-        imagePath: '/css/plum.jpeg',
+        imagePath: '/css/plumRumCake.jpg',
         title: 'Plum Rum Cake',
         price: 250
     }),
     new ProductRum({
-        imagePath: '/css/cranberry.jpeg',
+        imagePath: '/css/CranberryRumCake.jpg',
         title: 'Cranberry Rum Cake',
         price: 280
     }),
     new ProductRum({
-        imagePath: '/css/cherry.jpg',
+        imagePath: '/css/CherryRumCake.jpg',
         title: 'Cherry Rum Cake',
         price: 290
     }),
     new ProductRum({
-        imagePath: '/css/blueberry.jpg',
+        imagePath: '/css/BlueberryRumCake.jpg',
         title: 'Blueberry Rum Cake',
         price: 350
     }),
     new ProductRum({
-        imagePath: '/css/strawberry.jpeg',
+        imagePath: '/css/StrawberryRumCake.jpg',
         title: 'Strawberry Rum Cake',
         price: 280
     })
