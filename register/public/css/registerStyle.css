@@ -149,18 +149,14 @@
  
  @media (max-width:700px)
  {
-	.container .title{
-		margin-top: 60%;
-		width: 200px;
-		font-size: 20px;
-		height: 300px;
-		margin-bottom: 0;
+	.container{
+		
+		width: 90%;
+		height: 100%;
 	}
-	 .container
-	 {
-		max-width:90%;
-		margin-top: 30px;
-	 }
+	.container .title::before{
+		width: 100%;
+	}
  
  
   form .user-details .input-box
@@ -168,4 +164,5 @@
 	 margin-bottom:10px;
 	 width:100%;
   }
+
  }

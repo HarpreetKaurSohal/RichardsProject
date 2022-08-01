@@ -23,7 +23,7 @@
 
     <section class="header">
       <nav>
-            <a href="/home"><img src="/css/logo.jpg" class="logo"alt="logo"></a>
+            <a href="/home"><img src="/css/logo.jpg" class="logo" alt="logo"></a>
             <div class="nav-links" id="navLinks">
                 <!--to add cross closing icon-->
                 <i class="bi bi-x" onclick="hideMenu()"></i>
@@ -92,5 +92,15 @@
        </div>
     </div>  
   </div>
+  <script>
+        //Javascript for toggle menu
+        var navLinks = document.getElementById("navLinks");
+        function showMenu(){
+            navLinks.style.right="0";
+        }
+        function hideMenu(){
+            navLinks.style.right="-200px";
+        }
+    </script>
 </body>
 </html>

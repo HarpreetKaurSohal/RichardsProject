@@ -75,37 +75,6 @@ nav .bi{
     display: none;
 }
 
-@media screen and (max-width:700px){
-
-    .header h3{
-        font-size: 40px;
-        height: 125px
-    }
-    .nav-links ul li{
-        display: block;
-    }
-    .nav-links{
-        position: absolute;
-        background: #3a1313;
-        height: 100vh;
-        width: 200px;
-        top: 0;
-        right: -200px;
-        text-align: left;
-        z-index: 2;
-        transition: 1s;
-    }
-    nav .bi{
-        display: block;
-        color: #fff;
-        font-size: 22px;
-        margin: 10px;
-        cursor: pointer;
-    }
-    .nav-links ul{
-        padding: 30px;
-    }
-}
 
 /* categories section*/
 .categories{
@@ -185,4 +154,63 @@ nav .bi{
 }
 .categories .box-container .box:hover .content{
     transform: translateY(100%);
+}
+@media(max-width: 700px){
+
+    .header h3{
+        font-size: 30px;
+        padding-top: 50px;
+        
+    }
+    .nav-links ul li{
+        display: block;
+    }
+    nav .logo{
+        height: 40px;
+        width: 40px;
+    }
+    .nav-links{
+        position: absolute;
+        background: #3a1313;
+        height: 100vh;
+        width: 200px;
+        top: 0;
+        right: -200px;
+        text-align: left;
+        z-index: 2;
+        transition: 1s;
+    }
+    nav .bi{
+        display: block;
+        color: #fff;
+        font-size: 22px;
+        margin: 10px;
+        cursor: pointer;
+    }
+    .nav-links ul{
+        padding: 30px;
+    }
+    .categories{
+        width: 100%;
+        display: block;
+        margin: auto;
+        text-align: center;
+        padding-top: 1px;
+    }
+    .categories .head{
+        font-size: 25px;
+        font-weight: 400;
+    }
+    .categories .para{
+        font-size: 16px;
+    }
+    .categories .box-container{
+        padding-left: 4.5rem;
+    }
+
+
+/* .social{
+    margin-left: 28;
+} */
+
 }

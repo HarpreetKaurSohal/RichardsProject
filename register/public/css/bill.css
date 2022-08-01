@@ -8,8 +8,9 @@
     height: 60px;
     width: 60px;
     border-radius: 100px;
+    display: grid;
 }
-.user{
+.logo .user{
     width: 300px;
 }
 
@@ -81,37 +82,6 @@ nav .bi{
     display: none;
 }
 
-@media screen and (max-width:700px){
-
-    .header h3{
-        font-size: 40px;
-        height: 125px
-    }
-    .nav-links ul li{
-        display: block;
-    }
-    .nav-links{
-        position: absolute;
-        background: #3a1313;
-        height: 100vh;
-        width: 200px;
-        top: 0;
-        right: -200px;
-        text-align: left;
-        z-index: 2;
-        transition: 1s;
-    }
-    nav .bi{
-        display: block;
-        color: #fff;
-        font-size: 22px;
-        margin: 10px;
-        cursor: pointer;
-    }
-    .nav-links ul{
-        padding: 30px;
-    }
-}
 
 .body{
     padding:10px;
@@ -146,4 +116,23 @@ button{
     padding: 5px;
     border-radius: 5px;
     font-size: 16px;
+}
+@media(max-width: 700px){
+
+    .header h3{
+        font-size: 30px;
+        padding-top: 50px;
+    }
+    nav .logo{
+        height: 40px;
+        width: 40px;
+    }
+    .user{
+        font-size: 14px;
+        width: 250px;
+    }
+    .btn{
+        text-align: center;
+    }
+    
 }

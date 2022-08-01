@@ -280,3 +280,25 @@ nav{
 .nav-links ul li:hover::after{
     width:100%;
 }
+@media (max-width:700px)
+ {
+    body{
+        padding: 0%;
+    }
+	.container{
+		width: 95%;
+		height: 80%;
+        max-height: fit-content;
+	}
+	.container .title::before{
+		width: 100%;
+	}
+ 
+ 
+  form .user-details .input-box
+  {
+	 margin-bottom:10px;
+	 width:100%;
+  }
+
+ }

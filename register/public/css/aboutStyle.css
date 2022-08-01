@@ -182,14 +182,19 @@ nav .bi{
     padding: 0px 10px;
 }
 
-@media screen and (max-width:700px){
+@media(max-width: 700px){
 
     .header h3{
-        font-size: 40px;
-        height: 125px
+        font-size: 30px;
+        padding-top: 50px;
+        
     }
     .nav-links ul li{
         display: block;
+    }
+    nav .logo{
+        height: 40px;
+        width: 40px;
     }
     .nav-links{
         position: absolute;
@@ -241,7 +246,10 @@ nav .bi{
 
 }
 .content-section .content .social{
-   margin-left: 28%;
+   margin-left: 20%;
 }
+/* .social{
+    margin-left: 28;
+} */
 
 }

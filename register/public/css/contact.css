@@ -86,38 +86,6 @@ nav img{
 nav .bi{
     display: none;
 }
-
-@media screen and (max-width:700px){
-
-    .header h3{
-        font-size: 40px;
-        height: 125px
-    }
-    .nav-links ul li{
-        display: block;
-    }
-    .nav-links{
-        position: absolute;
-        background: #3a1313;
-        height: 100vh;
-        width: 200px;
-        top: 0;
-        right: -200px;
-        text-align: left;
-        z-index: 2;
-        transition: 1s;
-    }
-    nav .bi{
-        display: block;
-        color: #fff;
-        font-size: 22px;
-        margin: 10px;
-        cursor: pointer;
-    }
-    .nav-links ul{
-        padding: 30px;
-    }
-}
   
   .container
   {
@@ -152,32 +120,32 @@ nav .bi{
     background:linear-gradient(135deg, brown, purple);
 }
 
-.container .heading
+.container .con-heading
 {
     font-size:25px;
     font-weight:700;
     font-family: 'Poppins', sans-serif;
     /* position: relative; */
-    /* margin-top: 40px; */
-    /* margin-left: 0px; */
-    /* align-items:center; */
+    margin-top: 40px;
+    margin-left: 350px; 
     color: black;
 }
 
-.container .heading::before
+.container .con-heading::before
 {
     content: '';
     position:absolute;
     left:0;
     bottom:0;
-    margin-left: 320px;
+    margin-left: 350px;
+    margin-bottom: 310px;
     height:2px;
     width:450px;	
     background:linear-gradient(135deg, brown,purple);
 }
 
 
-.input-box .lable
+.input-box .label
 {
     color:black;
     -webkit-box-flex: 0;
@@ -289,4 +257,88 @@ form .button input:hover
 form .user-inputs .input-box input:hover
 {
   box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
+}
+@media(max-width: 700px){
+
+    .header h3{
+        font-size: 30px;
+        padding-top: 50px;
+        
+    }
+    .nav-links ul li{
+        display: block;
+    }
+    nav .logo{
+        height: 40px;
+        width: 40px;
+    }
+    .nav-links{
+        position: absolute;
+        background: #3a1313;
+        height: 100vh;
+        width: 200px;
+        top: 0;
+        right: -200px;
+        text-align: left;
+        z-index: 2;
+        transition: 1s;
+    }
+    nav .bi{
+        display: block;
+        color: #fff;
+        font-size: 22px;
+        margin: 10px;
+        cursor: pointer;
+    }
+    .nav-links ul{
+        padding: 30px;
+    }
+    .container{
+        width: 90%;
+        display: block;
+        margin: auto;
+        /* padding: 10px; */
+    }
+    .container .title{
+        font-size: 25px;
+    }
+    .container .title::before{
+        width: 170px;
+    }
+
+    .container .con-heading{
+        margin: 0%;
+        font-size: 16px;
+        padding:5px ;
+    }
+    .container .con-heading::before{
+        margin: 10%;
+        margin-bottom: 340px;
+        width: 300px;
+    }
+    .social{
+        margin: 0%;
+    }
+    .social-text{
+        font-size: 16px;
+    }
+    
+    .image-section{
+        float: left;
+        width: 30%;
+    }
+
+
+
+.content-section .content .button{
+    text-align: center;
+
+}
+.content-section .content .social{
+   margin-left: 20%;
+}
+/* .social{
+    margin-left: 28;
+} */
+
 }

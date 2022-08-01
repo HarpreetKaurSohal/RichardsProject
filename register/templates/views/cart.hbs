@@ -44,6 +44,7 @@
                     <li><a href="/menu">BACK TO MENU</a></li>
                 </ul>
             </div>
+            <i class="bi bi-list" onclick="showMenu()"></i>
         </nav>
         <div class="heading">
           <h3>Richard's Wine And Rum Cakes </h3>  
@@ -96,5 +97,15 @@
             </form>
             
      </section>
+     <script>
+        //Javascript for toggle menu
+        var navLinks = document.getElementById("navLinks");
+        function showMenu(){
+            navLinks.style.right="0";
+        }
+        function hideMenu(){
+            navLinks.style.right="-200px";
+        }
+    </script>
 </body>
 </html>

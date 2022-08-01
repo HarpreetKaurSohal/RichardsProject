@@ -43,6 +43,7 @@
                   {{/if}}
                 </ul>
             </div>
+            <i class="bi bi-list" onclick="showMenu()"></i>
         </nav>
         <div class="heading">
           <h3>Richard's Wine And Rum Cakes </h3>  
@@ -50,7 +51,7 @@
      </section>
     <div class="container">
         <div class="title">CONTACT US</div>
-        <div class="heading">Send Us Your Feedback/Queries</div>
+        <div class="con-heading">Send Us Your Feedback/Queries</div>
         <form action="/processFeedback" method="post">  
 	    
         <div class="social">
@@ -97,4 +98,15 @@
                                                
 		</form>
     </div>
+    <script>
+        //Javascript for toggle menu
+        var navLinks = document.getElementById("navLinks");
+        function showMenu(){
+            navLinks.style.right="0";
+        }
+        function hideMenu(){
+            navLinks.style.right="-200px";
+        }
+    </script>
 </body>
+</html>
