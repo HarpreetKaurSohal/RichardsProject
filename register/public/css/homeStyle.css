@@ -221,7 +221,7 @@ p{
 }
 .menu-col-2:hover{
     box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
-    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(rumGlass3.jpeg);
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(plainCake3.jpeg);
     background-position: center;
     background-size: cover;
     position: relative;
@@ -258,7 +258,7 @@ p{
 }
 .menu-col-3:hover{
     box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
-    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(plainCake3.jpeg);
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(rumGlass3.jpeg);
     background-position: center;
     background-size: cover;
     position: relative;
